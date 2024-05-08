@@ -2,6 +2,7 @@ from flask import Flask, send_file, request, redirect, render_template, Blueprin
 import redis
 import sqlite3
 from uuid import uuid4, UUID
+import database
 
 app = Flask(__name__)
 
