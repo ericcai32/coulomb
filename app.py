@@ -37,4 +37,8 @@ def participant(team_name: str, participant_name: str):
     else:
         return "[404 PAGE]"
 
+@app.route('/login', methods=('GET', 'POST'))
+def login():
+    return "[LOGIN PAGE]"
+
 app.run(port=8022)
