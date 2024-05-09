@@ -2,16 +2,28 @@ from flask import Flask, send_file, request, redirect, render_template, Blueprin
 import redis
 from uuid import uuid4, UUID
 
+from account_tools import *
+
+# import database
+
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return "[LIST OF TOURNAMENTS]"
+    tournaments = [] # database.get_tournaments() get list of tournaments
+    return render_template('tournaments.j2', tournaments=tournaments)
 
 @app.route('/new', methods=('GET', 'POST'))
 def new():
-    return "[TOURNAMENT CREATION]"
-
+    is_to = True # database.check_to() figure out if user is a to
+    if not is_to:
+        return "You do not have access to this page."
+    if request.method == 'POST':
+        # get info from post request
+        # hugh.create_tournament(tournament info)
+        return "[NEW TOURNAMENT PAGE]"
+    if request.method == 'GET':
+        return render_template('new.j2')
 @app.route('/tournaments/<tournament_name>')
 def tournament(tournament_name: str):
     tournament_exists = True # FIX THIS
@@ -30,7 +42,7 @@ def team(team_name: str):
 
 @app.route('/teams/<team_name>/<participant_name>')
 def participant(team_name: str, participant_name: str):
-    team_exists = True # FIX THIS
+    team_exists = True # FIX THIS.
     participant_exists = True # FIX THIS
     if team_exists and participant_exists:
         return f"[PARTICPANT PAGE FOR {participant_name} ON TEAM {team_name}]"
@@ -39,6 +51,46 @@ def participant(team_name: str, participant_name: str):
 
 @app.route('/login', methods=('GET', 'POST'))
 def login():
-    return "[LOGIN PAGE]"
+    """
+    Allows the user to log in or register an account.
+    Returns:
+        On error: the rendered login template with an error message filled in.
+        On success: Redirects to the index page and stores the session data as cookies.
+    """
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if not (username and password):
+            return redirect('login')
+        if request.form['mode'] == 'login':
+            mode = 'LOGIN'
+        elif request.form['mode'] == 'register':
+            mode = 'REGISTER'
+        else:
+            return redirect('login')
+        
+        if mode == 'REGISTER':
+            error = register_user(username, password)
+            if error:
+                return render_template('login.j2', error=error)
+            token = begin_session(username)
+            resp = make_response(redirect(f'/'))
+            resp.set_cookie('token', token)
+            return resp
+        if mode == 'LOGIN':
+            error = check_login(username, password)
+            if error:
+                return render_template('login.j2', error=error)
+            token = begin_session(username)
+            resp = make_response(redirect(f'/'))
+            resp.set_cookie('token', token)
+            return resp
+    else:
+        if check_session():
+            token = request.cookies.get('token')
+            username = get_session(token)
+            return redirect(f'/')
+        else:
+            return render_template('login.j2')
 
 app.run(port=8022)
