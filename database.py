@@ -10,7 +10,7 @@ con.close()
 def create_tournament(tournament_name, events):
     con = sqlite3.connect('users.db')
     cur = con.cursor()
-    cur.execute('CREATE TABLE IF NOT EXISTS ? (rowid INTEGER PRIMARY KEY AUTOINCREMENT, Team String);', (tournament_name, ))
+    cur.execute('CREATE TABLE IF NOT EXISTS ? (id INTEGER PRIMARY KEY AUTOINCREMENT, Team String);', (tournament_name, ))
     for event in events:
         cur.execute('ALTER TABLE ? ADD ? STRING', (tournament_name, event))
     cur.execute('INSERT INTO tournaments (name) VALUES (?)', (tournament_name, ))
