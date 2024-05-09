@@ -9,6 +9,11 @@ from account_tools import *
 
 app = Flask(__name__)
 
+
+# List of tourneys
+# One table for each tournament containing the actual data (obviously)
+# List of accounts
+
 @app.route('/')
 def index():
     tournaments = [] # database.get_tournaments() get list of tournaments
@@ -31,7 +36,7 @@ def tournament(tournament_name: str):
     if tournament_exists:
         return f"[TOURNAMENT PAGE FOR {tournament_name}]"
     else:
-        return "[404 PAGE]"
+        return send_file("static/404.html")
 
 @app.route('/teams/<team_name>', methods=('GET', 'POST'))
 def team(team_name: str):
@@ -39,7 +44,7 @@ def team(team_name: str):
     if team_exists:
         return f"[TEAM PAGE FOR {team_name}]"
     else:
-        return "[404 PAGE]"
+        return send_file("static/404.html")
 
 @app.route('/teams/<team_name>/<participant_name>')
 def participant(team_name: str, participant_name: str):
@@ -94,4 +99,4 @@ def login():
         else:
             return render_template('login.j2')
 
-app.run(port=8022)
+app.run(port=8022, debug=True)
