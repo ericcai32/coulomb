@@ -1,7 +1,7 @@
 from flask import Flask, send_file, request, redirect, render_template, Blueprint, jsonify, make_response
 import redis
 from uuid import uuid4, UUID
-import database
+# import database
 
 from account_tools import *
 
@@ -17,7 +17,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     tournaments = [] # database.get_tournaments() get list of tournaments
-    return render_template('tournaments.j2', tournaments=tournaments)
+    return render_template('tournament_list.j2', tournaments=tournaments)
 
 @app.route('/new', methods=('GET', 'POST'))
 def new():

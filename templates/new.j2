@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <head>
-    <link rel="stylesheet" href="/static/style.css">
 
     <style>
         * {
@@ -94,4 +93,21 @@
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="add_events.js"></script>
+<script>
+
+$(document).ready(function () {
+    $(".add").click(function () {
+        let first = document.querySelector('form > p');
+        let clone = first.cloneNode(true);
+        first.parentNode.insertBefore(clone, first);
+        return false;
+    });
+
+    // Event delegation for .remove elements
+    $('form').on('click', '.remove', function () {
+        $(this).parent().remove();
+    });
+});
+
+
+</script>
