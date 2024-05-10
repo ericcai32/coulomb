@@ -5,7 +5,7 @@ from uuid import uuid4, UUID
 
 from account_tools import *
 
-# import database
+
 
 app = Flask(__name__)
 

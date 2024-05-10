@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #E9C46A;
+            padding: 1.25em;
+        }
+
+        .header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 1.25em;
+            /* Add margin to separate the header from the table */
+        }
+
+        h1 {
+            font-weight: bold;
+            font-size: 2em;
+            color: #264653;
+            margin-right: auto;
+            /* Push the table to the right */
+        }
+
+        .table_results {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        table {
+            font-weight: bold;
+            color: #264653;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 0.63em;
+            /* Add padding to the table cells */
+        }
+
+        tr:hover {
+            background: #EDD69C;
+        }
+    </style>
+
+    <title>{{ tournament }}</title>
+</head>
+
+<body>
+    <div class="header">
+        <h1>{{ tournament }} Results</h1>
+    </div>
+
+    <div class="table_results">
+        <table class="results">
+            {% for row in data %}
+            <tr class="row">
+                <th>{{ row[0] }}</th>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+
+</html>
