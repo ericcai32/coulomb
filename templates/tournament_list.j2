@@ -9,8 +9,10 @@
             align-items: flex-start;
             justify-content: flex-start;
             font-family: Verdana, sans-serif;
-            background-color: #001219;
+            background-color: #264653;
+            /* Background color */
             color: #94d2bd;
+            /* Text color */
             padding: 10px;
             margin: 0;
             min-height: 100vh;
@@ -19,14 +21,16 @@
 
         #users {
             padding: 20px;
-            background-color: #005f73;
+            background-color: #2A9D8F;
+            /* Background color */
             border-radius: 10px;
             border: 3px solid #0a9396;
             width: auto;
         }
 
         a {
-            color: #ee9b00;
+            color: #E9C46A;
+            /* Link color */
             font-size: 1.2em;
             text-decoration: none;
             display: block;
@@ -34,20 +38,22 @@
         }
 
         a:hover {
-            color: #ca6702;
+            color: #F4A261;
+            /* Hover color */
         }
 
         label {
             font-size: 1.8em;
             font-weight: bold;
-            color: #e9d8a6;
+            color: #F4A261;
+            /* Label color */
         }
     </style>
 </head>
 
 <body>
     <div id="tournaments">
-        <label>Profiles:</label>
+        <label>List of All Tournaments</label>
         <script type="text/javascript">
             const profiles = {{ tournaments }};
             const container = document.getElementById("tournaments");
