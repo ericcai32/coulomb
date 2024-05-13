@@ -2,6 +2,7 @@ from flask import Flask, send_file, request, redirect, render_template, Blueprin
 import redis
 from uuid import uuid4, UUID
 from database import *
+from account_tools import *
 
 
 
@@ -14,7 +15,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    tournaments = [] # database.get_tournaments() get list of tournaments
+    tournaments = get_all_tournaments()
     return render_template('tournament_list.j2', tournaments=tournaments)
 
 @app.route('/new', methods=('GET', 'POST'))
@@ -27,10 +28,10 @@ def new():
         tournament_name = request.form['name']
         events = request.form.getlist('event')
         print(events)
-        # if create_tournament(tournament_name, events, "test_user"): # implement tournament creator
-        #     return redirect(f'tournaments/{tournament_name}')
-        # else:
-        #     return "Tournament with this name already exists." # Probably should make this prettier
+        if create_tournament(tournament_name, events, "test_user"): # implement tournament creator
+            return redirect(f'tournaments/{tournament_name}')
+        else:
+            return "Tournament with this name already exists." # Probably should make this prettier
     if request.method == 'GET':
         return render_template('new.j2')
     
@@ -38,8 +39,8 @@ def new():
 def tournament(tournament_name: str):
     tournament_exists = True #check_exists(tournament_name) # FIX THIS
     if tournament_exists:
-        # tournament_results = read_table(tournament_name)
-        tournament_results = [["polo ridge", 1, 3, 1], ["metrolina", 2, 1, 3], ["saksham elementary", 3, 2, 2]]
+        tournament_results = read_table(tournament_name)
+        # tournament_results = [["polo ridge", 1, 3, 1], ["metrolina", 2, 1, 3], ["saksham elementary", 3, 2, 2]]
         return render_template('tournament.j2', tournament=tournament_name, data=tournament_results)
     else:
         return send_file("static/404.html")
