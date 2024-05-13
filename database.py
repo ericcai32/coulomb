@@ -150,20 +150,31 @@ def get_all_tournaments():
         rtn.append(name[0])
     return rtn
 
-def get_participated_events():
+def get_participated_events(school_name):
+    rtn = []
     con = sqlite3.connect('users.db')
     cur = con.cursor()
-    cur.execute('SELECT')
+    cur.execute('SELECT name FROM tournaments')
+    tourny_names = []
+    data = cur.fetchall()
+    for name in data:
+        tourny_names.append(name[0])
+    for tourny in tourny_names:
+        cur.execute('SELECT schools FROM tournaments WHERE name=?', (tourny, ))
+        tournys = str(cur.fetchall()[0][0]).split()
+        if school_name in tournys:
+            rtn.append(tourny)
+    con.close()
+    return rtn
 
-'''
-con = sqlite3.connect('users.db')
-cur = con.cursor()
-cur.execute('SELECT name FROM tournaments')
-tourny_names = []
-data = cur.fetchall()
-for name in data:
-    tourny_names.append(name[0])
-for tourny in tourny_names:
-    cur.execute('SELECT schools FROM ')
-con.close()
-'''
+def get_events(tourny_name):
+    rtn = []
+    con = sqlite3.connect('users.db')
+    cur = con.cursor()
+    cur.execute('PRAGMA table_info(test_tournament_4)')
+    data = cur.fetchall()
+    for i in range(2, len(data)):
+        rtn.append(data[i][1])
+    con.close()
+    return rtn
+
