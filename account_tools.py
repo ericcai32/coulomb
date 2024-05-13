@@ -27,6 +27,7 @@ def check_session() -> int:
     Returns:
         0 if the key does not exist or 1 if it does.
     """
+    print(r.get('token'))
     return r.exists('token')
 
 def get_session(token: str) -> str:

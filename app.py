@@ -27,8 +27,9 @@ def new():
         # Get info from post request.
         tournament_name = request.form['name']
         events = request.form.getlist('event')
-        print(events)
-        if create_tournament(tournament_name, events, "test_user"): # implement tournament creator
+        token = request.cookies.get('token')
+        user = get_session(token)
+        if create_tournament(tournament_name, events, user): # implement tournament creator
             return redirect(f'tournaments/{tournament_name}')
         else:
             return "Tournament with this name already exists." # Probably should make this prettier
@@ -37,11 +38,14 @@ def new():
     
 @app.route('/tournaments/<tournament_name>')
 def tournament(tournament_name: str):
-    tournament_exists = True #check_exists(tournament_name) # FIX THIS
+    tournament_exists = not check_exists(tournament_name)
     if tournament_exists:
+        token = request.cookies.get('token')
+        user = get_session(token)
+        is_to = verify_creator(user, tournament_name)
         tournament_results = read_table(tournament_name)
-        # tournament_results = [["polo ridge", 1, 3, 1], ["metrolina", 2, 1, 3], ["saksham elementary", 3, 2, 2]]
-        return render_template('tournament.j2', tournament=tournament_name, data=tournament_results)
+        tournament_results = [["polo ridge", 1, 3, 1], ["metrolina", 2, 1, 3], ["saksham elementary", 3, 2, 2]]
+        return render_template('tournament.j2', tournament=tournament_name, data=tournament_results, is_to=is_to)
     else:
         return send_file("static/404.html")
 
@@ -63,7 +67,7 @@ def participant(team_name: str, participant_name: str):
         return "[404 PAGE]"
 
 @app.route('/login', methods=('GET', 'POST'))
-def login():
+def login_flask():
     """
     Allows the user to log in or register an account.
     Returns:
@@ -75,25 +79,25 @@ def login():
         password = request.form['password']
         if not (username and password):
             return redirect('login')
-        if request.form['mode'] == 'login':
+        if request.form['mode'] == 'LOGIN':
             mode = 'LOGIN'
-        elif request.form['mode'] == 'register':
+        elif request.form['mode'] == 'REGISTER':
             mode = 'REGISTER'
         else:
             return redirect('login')
         
         if mode == 'REGISTER':
-            error = register_user(username, password)
+            error = not register(username, password)
             if error:
-                return render_template('login.j2', error=error)
+                return render_template('login.j2', error="Username already exists.")
             token = begin_session(username)
             resp = make_response(redirect(f'/'))
             resp.set_cookie('token', token)
             return resp
         if mode == 'LOGIN':
-            error = check_login(username, password)
+            error = not login(username, password)
             if error:
-                return render_template('login.j2', error=error)
+                return render_template('login.j2', error="Incorrect username or password.")
             token = begin_session(username)
             resp = make_response(redirect(f'/'))
             resp.set_cookie('token', token)
@@ -105,5 +109,18 @@ def login():
             return redirect(f'/')
         else:
             return render_template('login.j2')
+
+@app.route('/logout', methods=('GET', 'POST'))
+def logout():
+    """
+    Allows the user to log out.
+    Returns:
+        Redirects to the login page with cookies removed.
+
+    """
+    end_session()
+    resp = make_response(redirect('login'))
+    resp.set_cookie('token', '', expires=0)
+    return resp
 
 app.run(port=8022, debug=True)
