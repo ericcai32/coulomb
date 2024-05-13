@@ -83,6 +83,12 @@
 
     <div class="results">
         <table class="editable">
+            <tr>
+                <td>School</td>
+                {% for event in events %}
+                <td>{{event}}</td>
+                {% endfor %}
+            </tr>
             {% for row in data %}
             <tr class="row">
                 {% for cell in row %}

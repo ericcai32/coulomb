@@ -171,7 +171,7 @@ def get_events(tourny_name):
     rtn = []
     con = sqlite3.connect('users.db')
     cur = con.cursor()
-    cur.execute('PRAGMA table_info(test_tournament_4)')
+    cur.execute(f'PRAGMA table_info({tourny_name})')
     data = cur.fetchall()
     for i in range(2, len(data)):
         rtn.append(data[i][1])
