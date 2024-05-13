@@ -100,7 +100,7 @@
 <script>
     // (A) INITIALIZE - DOUBLE CLICK TO EDIT CELL
     window.addEventListener("DOMContentLoaded", () => {
-        for (let cell of document.querySelectorAll(".editable td")) {
+        for (let cell of document.querySelectorAll(".editable th")) {
             cell.ondblclick = () => editable.edit(cell);
         }
     });
