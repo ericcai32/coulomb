@@ -1,9 +1,7 @@
 from flask import Flask, send_file, request, redirect, render_template, Blueprint, jsonify, make_response
 import redis
 from uuid import uuid4, UUID
-import database
-
-from account_tools import *
+from database import *
 
 
 
@@ -21,30 +19,28 @@ def index():
 
 @app.route('/new', methods=('GET', 'POST'))
 def new():
-    is_to = True # database.check_to() figure out if user is a to
+    is_to = True # database.check_to() figure out if user is a to, or i think we just check if logged in here
     if not is_to:
         return "You do not have access to this page."
     if request.method == 'POST':
-        # get info from post request
+        # Get info from post request.
         tournament_name = request.form['name']
-        events = []
-        print(request.form.keys())
-        print(request.form.getall('events'))
-        for item in request.form.keys():
-            print(item)
-            if item[0] == 'event':
-                events.append(item[1])
-
+        events = request.form.getlist('event')
         print(events)
-        # hugh.create_tournament(tournament info)
-        return redirect(f'tournaments/{tournament_name}')
+        # if create_tournament(tournament_name, events, "test_user"): # implement tournament creator
+        #     return redirect(f'tournaments/{tournament_name}')
+        # else:
+        #     return "Tournament with this name already exists." # Probably should make this prettier
     if request.method == 'GET':
         return render_template('new.j2')
+    
 @app.route('/tournaments/<tournament_name>')
 def tournament(tournament_name: str):
-    tournament_exists = True # FIX THIS
+    tournament_exists = True #check_exists(tournament_name) # FIX THIS
     if tournament_exists:
-        return f"[TOURNAMENT PAGE FOR {tournament_name}]"
+        # tournament_results = read_table(tournament_name)
+        tournament_results = [["polo ridge", 1, 3, 1], ["metrolina", 2, 1, 3], ["saksham elementary", 3, 2, 2]]
+        return render_template('tournament.j2', tournament=tournament_name, data=tournament_results)
     else:
         return send_file("static/404.html")
 
