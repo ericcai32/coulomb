@@ -20,9 +20,9 @@ def index():
 
 @app.route('/new', methods=('GET', 'POST'))
 def new():
-    is_to = True # database.check_to() figure out if user is a to, or i think we just check if logged in here
-    if not is_to:
-        return "You do not have access to this page."
+    is_logged = check_session() # database.check_to() figure out if user is a to, or i think we just check if logged in here
+    if not is_logged:
+        return redirect('/login')
     if request.method == 'POST':
         # Get info from post request.
         tournament_name = request.form['name']
@@ -40,9 +40,11 @@ def new():
 def tournament(tournament_name: str):
     tournament_exists = not check_exists(tournament_name)
     if tournament_exists:
-        token = request.cookies.get('token')
-        user = get_session(token)
-        is_to = verify_creator(user, tournament_name)
+        is_to = False
+        if check_session():
+            token = request.cookies.get('token')
+            user = get_session(token)
+            is_to = verify_creator(user, tournament_name)
         tournament_results = read_table(tournament_name)
         tournament_results = [["polo ridge", 1, 3, 1], ["metrolina", 2, 1, 3], ["saksham elementary", 3, 2, 2]]
         return render_template('tournament.j2', tournament=tournament_name, data=tournament_results, is_to=is_to)
