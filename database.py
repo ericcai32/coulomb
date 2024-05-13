@@ -42,6 +42,6 @@ def add_to_table(tournament_name, school_name, data):
     return True
 
 
-create_tournament("test_tournament_2", ['event1', 'event2'])
+#create_tournament("test_tournament_2", ['event1', 'event2'])
 
 

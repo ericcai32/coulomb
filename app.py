@@ -1,7 +1,7 @@
 from flask import Flask, send_file, request, redirect, render_template, Blueprint, jsonify, make_response
 import redis
 from uuid import uuid4, UUID
-# import database
+import database
 
 from account_tools import *
 
@@ -26,8 +26,18 @@ def new():
         return "You do not have access to this page."
     if request.method == 'POST':
         # get info from post request
+        tournament_name = request.form['name']
+        events = []
+        print(request.form.keys())
+        print(request.form.getall('events'))
+        for item in request.form.keys():
+            print(item)
+            if item[0] == 'event':
+                events.append(item[1])
+
+        print(events)
         # hugh.create_tournament(tournament info)
-        return "[NEW TOURNAMENT PAGE]"
+        return redirect(f'tournaments/{tournament_name}')
     if request.method == 'GET':
         return render_template('new.j2')
 @app.route('/tournaments/<tournament_name>')

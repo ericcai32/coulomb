@@ -77,11 +77,11 @@
 
 <body>
     <div class="container">
-        <form>
+        <form method="POST" action="/new">
             <span class="add">&plus;</span>
-            <label class="tournament_name">Name of the Tournament: </label><input type="text">
+            <label class="tournament_name">Name of the Tournament: </label><input type="text" name="name">
             <p class="eventBox">
-                <label>Add Event:</label> <input type="text">
+                <label>Add Event:</label> <input type="text" name="event">
                 <span class="remove">&times;</span>
             </p>
             <div class="submit">
