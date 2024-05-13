@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Tournaments Directory</title>
+    <style>
+        body {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            font-family: Verdana, sans-serif;
+            background-color: #264653;
+            /* Background color */
+            color: #94d2bd;
+            /* Text color */
+            padding: 10px;
+            margin: 0;
+            min-height: 100vh;
+            text-align: left;
+        }
+
+        #users {
+            padding: 20px;
+            background-color: #2A9D8F;
+            /* Background color */
+            border-radius: 10px;
+            border: 3px solid #0a9396;
+            width: auto;
+        }
+
+        a {
+            color: #E9C46A;
+            /* Link color */
+            font-size: 1.2em;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        a:hover {
+            color: #F4A261;
+            /* Hover color */
+        }
+
+        label {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #F4A261;
+            /* Label color */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="tournaments">
+        <label>List of All Tournaments</label>
+        <script type="text/javascript">
+            const profiles = {{ tournaments }};
+            const container = document.getElementById("tournaments");
+            // Appends every profile stored in the database, one by one, and gives them a link.
+            profiles.forEach(profile => {
+                let link = document.createElement('a');
+                link.textContent = profile;
+                link.href = "/tournaments/" + profile;
+                container.appendChild(link);
+            });
+        </script>
+    </div>
+</body>
+
+</html>

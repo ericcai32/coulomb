@@ -1,0 +1,38 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <form class="form" method="post">
+        <input type="text" name="username" placeholder="Username"><br>
+        <div class="passwordLine">
+            <input type="password" name="password" id="password" placeholder="Password">
+            <label class="lock" onclick=toggleVisibility(event)>&#x1F512;</label>
+        </div>
+        <div class="login">
+            <button name="mode" value="LOGIN">Login</button>
+            <button name="mode" value="REGISTER">Register</button>
+        </div>
+        <br>
+        <label id="error">{{ error }}</label>
+    </form>
+
+    <script type="text/javascript">
+        function toggleVisibility(event) {
+            let x = document.getElementById("password")
+            if (x.type === "password") {
+                x.type = "text";
+                event.target.innerHTML = "&#x1F441;"
+            } else {
+                x.type = "password";
+                event.target.innerHTML = "&#x1F512;"
+            }
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #001219; /* Deep blue background */
+}
+
+.form {
+    display: grid;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    border: 5px solid;
+    border-color: #005f73; /* Dark teal border */
+    padding: 20px;
+    background-color: #94d2bd; /* Light teal background */
+}
+
+.passwordLine {
+    display: flex;
+    align-items: center;
+}
+
+.login > button {
+    padding: 5px;
+    font-size: 1.5em;
+    border-radius: 5px;
+    border-color: #ca6702; /* Dark orange */
+    background-color: #ee9b00; /* Bright orange */
+    color: #001219; /* Dark blue text for contrast */
+}
+
+button {
+    color: #001219; /* Dark blue text */
+    background-color: #94d2bd; /* Light teal background */
+    border-color: #005f73; /* Dark teal border */
+    font-weight: bold;
+}
+
+input {
+    padding: 5px;
+    font-size: 2em;
+    border-radius: 5px;
+    border-color: #0a9396; /* Soft greenish teal */
+    background-color: #e9d8a6; /* Light beige */
+    color: #005f73; /* Text color */
+}
+
+input:hover {
+    border-color: #0a9396;
+}
+
+#error {
+    color: #bb3e03; /* Deep orange-red */
+    font-size: 1em;
+    text-align: center;
+    padding-top: 1em;
+}
+
+label {
+    padding-left: 10px;
+    font-size: 2em;
+    background-color: #e9d8a6; /* Light beige background */
+    color: #9b2226; /* Dark red text for good visibility */
+}
+
+.login {
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 1em;
+}
