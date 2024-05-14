@@ -38,7 +38,6 @@
             justify-content: flex-start;
             align-items: center;
             margin-bottom: 1.25em;
-            /* Add margin to separate the header from the table */
         }
 
         h1 {
@@ -46,7 +45,6 @@
             font-size: 2em;
             color: #264653;
             margin-right: auto;
-            /* Push the table to the right */
         }
 
         .table_results {
@@ -65,11 +63,38 @@
         th,
         td {
             padding: 0.63em;
-            /* Add padding to the table cells */
         }
 
         tr:hover {
             background: #EDD69C;
+        }
+
+        #cell:hover {
+            cursor: auto;
+        }
+
+        /* Iffy about this if it doesn't work then remove */
+        .results {
+            user-select: none;
+            /* standard syntax */
+            -webkit-user-select: none;
+            /* webkit (safari, chrome) browsers */
+            -moz-user-select: none;
+            /* mozilla browsers */
+            -khtml-user-select: none;
+            /* webkit (konqueror) browsers */
+            -ms-user-select: none;
+            /* IE10+ */
+        }
+
+        .join {
+            top: 2%;
+            left: 90%;
+            width: 7em;
+            height: 2.2em;
+            position: absolute;
+            z-index: 2;
+            background: black;
         }
     </style>
 
@@ -77,8 +102,11 @@
 </head>
 
 <body>
-    <div class="header">
+    <span class="header">
         <h1>{{ tournament }} Results</h1>
+    </span>
+    <div class="join">
+        <button name="Join" value="JOIN">Join Tournament</button>
     </div>
 
     <div class="results">
@@ -92,7 +120,7 @@
             {% for row in data %}
             <tr class="row">
                 {% for cell in row %}
-                <th> {{cell}} </th>
+                <th id="cell"> {{cell}} </th>
                 {% endfor %}
             </tr>
             {% endfor %}
@@ -109,6 +137,7 @@
     const is_to = "{{ is_to }}";
     console.log(is_to);
     if (is_to == "True") {
+        document.getElementById("cell").style.cursor = "pointer"
         // (A) INITIALIZE - DOUBLE CLICK TO EDIT CELL
         window.addEventListener("DOMContentLoaded", () => {
             for (let cell of document.querySelectorAll(".editable th")) {
