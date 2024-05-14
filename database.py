@@ -58,6 +58,7 @@ def add_to_table(tournament_name, school_name, data):
         cur.execute(f'UPDATE {tournament_name} SET {event_names[i]} = {scores[i]} WHERE Team = ?', (school_name, ))
     con.commit()
     con.close()
+    print('adding')
     return True
 
 def register(username, password):
@@ -190,5 +191,3 @@ def get_placements(team_name):
     con.close()
     print(rtn)
     return rtn
-
-get_placements('NCSSM')

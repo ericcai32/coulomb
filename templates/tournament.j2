@@ -106,7 +106,7 @@
         <h1>{{ tournament }} Results</h1>
     </span>
     <div class="join">
-        <button name="Join" value="JOIN">Join Tournament</button>
+        <button name="Join" value="JOIN" onclick="join_tournament()">Join Tournament</button>
     </div>
 
     <div class="results">
@@ -139,7 +139,7 @@
             }
         });
 
-        var editable = {
+        let editable = {
             // (B) PROPERTIES
             selected: null,  // current selected cell
             value: "", // current selected cell value
@@ -200,6 +200,18 @@
                 }
             }
         };
+    }
+
+
+    function join_tournament(){
+        const url = String(window.location)
+        
+        const requestOptions = {
+            method: "POST", 
+        };
+
+        fetch(url, requestOptions).then(response => console.log('created tournament'))
+
     }
 
 

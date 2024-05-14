@@ -50,6 +50,12 @@ def tournament(tournament_name: str):
         return render_template('tournament.j2', tournament=tournament_name, data=tournament_results, is_to=is_to)
     else:
         return send_file("static/404.html")
+    
+@app.route('/tournaments/<tournament_name>', methods=['POST'])
+def add_tournament(tournament_name):
+    token = request.cookies.get('token')
+    add_to_table(tournament_name, get_session(token), {})
+    return 'school added'
 
 @app.route('/teams/<team_name>', methods=('GET', 'POST'))
 def team(team_name: str):
