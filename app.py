@@ -36,22 +36,36 @@ def new():
     if request.method == 'GET':
         return render_template('new.j2')
     
-@app.route('/tournaments/<tournament_name>')
+@app.route('/tournaments/<tournament_name>', methods=('GET', 'POST', 'PUT'))
 def tournament(tournament_name: str):
-    tournament_exists = not check_exists(tournament_name)
-    if tournament_exists:
-        is_to = False
-        if check_session():
-            token = request.cookies.get('token')
-            user = get_session(token)
-            is_to = verify_creator(user, tournament_name)
-        tournament_results = read_table(tournament_name)
-        tournament_events = get_events(tournament_name)
-        print(tournament_events)
-        tournament_results = [["polo ridge", 1, 3, 1], ["metrolina", 2, 1, 3], ["saksham elementary", 3, 2, 2]]
-        return render_template('tournament.j2', tournament=tournament_name, events=tournament_events, data=tournament_results, is_to=is_to)
-    else:
-        return send_file("static/404.html")
+    if request.method == 'GET':
+        tournament_exists = not check_exists(tournament_name)
+        if tournament_exists:
+            is_to = False
+            if check_session():
+                token = request.cookies.get('token')
+                user = get_session(token)
+                is_to = verify_creator(user, tournament_name)
+            tournament_results = read_table(tournament_name)
+            tournament_events = get_events(tournament_name)
+            return render_template('tournament.j2', tournament=tournament_name, events=tournament_events, data=tournament_results, is_to=is_to)
+        else:
+            return send_file("static/404.html")
+    elif request.method == 'PUT':
+        data = request.get_json()
+        events = get_events(tournament_name)
+        print(data)
+        print(events)
+        for team_results in data:
+            new_data = {}
+            team = team_results[0]
+            for i in range(len(events)):
+                new_data[events[i]] = team_results[i + 1]
+            if not update_row(tournament_name, team, new_data):
+                return jsonify("fail")
+            
+
+        return jsonify("success")
 
 @app.route('/teams/<team_name>', methods=('GET', 'POST'))
 def team(team_name: str):
