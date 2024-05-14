@@ -36,7 +36,7 @@ def new():
     if request.method == 'GET':
         return render_template('new.j2')
     
-@app.route('/tournaments/<tournament_name>', methods=('GET', 'POST', 'PUT'))
+@app.route('/tournaments/<tournament_name>', methods=('GET', 'PUT'))
 def tournament(tournament_name: str):
     if request.method == 'GET':
         tournament_exists = not check_exists(tournament_name)
@@ -66,6 +66,12 @@ def tournament(tournament_name: str):
             
 
         return jsonify("success")
+    
+@app.route('/tournaments/<tournament_name>', methods=['POST'])
+def add_tournament(tournament_name):
+    token = request.cookies.get('token')
+    add_to_table(tournament_name, get_session(token), {})
+    return 'school added'
 
 @app.route('/teams/<team_name>', methods=('GET', 'POST'))
 def team(team_name: str):
