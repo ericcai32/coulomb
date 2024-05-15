@@ -91,12 +91,20 @@
             display: inline-grid;
             grid-template-columns: auto;
             gap: 1rem;
+            justify-content: center;
+            margin-top: 20px;
+            /* Added margin for spacing */
         }
 
         .grid-item {
             background-color: #fff;
             text-align: center;
-            border: #000;
+            border: 1px solid #14213D;
+            /* Accent border color */
+            padding: 10px;
+            /* Added padding for spacing */
+            border-radius: 5px;
+            /* Added border-radius for rounded corners */
         }
     </style>
     <title>{{ user }}'s Profile</title>
@@ -112,16 +120,12 @@
             <br>
             <button name="LOGOUT" value="logout" id="logout">Logout</button>
         </form>
-
     </div>
 
     <div class="grid-container">
-
         {% for cell in participated_events %}
         <div class="grid-item"> {{cell}} </div>
         {% endfor %}
-
-
     </div>
 
 </body>

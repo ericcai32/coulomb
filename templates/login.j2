@@ -1,8 +1,89 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <link rel="stylesheet" href="/static/style.css">
     <title>Login</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            background-color: #fff;
+            /* Background color */
+            color: #000;
+            /* Text color */
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .form {
+            background-color: #E5E5E5;
+            /* Form background color */
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+            /* Add shadow for depth */
+            text-align: center;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            border: 2px solid #14213D;
+            /* Input border color */
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .passwordLine {
+            position: relative;
+        }
+
+        .lock {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #14213D;
+            /* Lock icon color */
+        }
+
+        .login {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #FCA311;
+            /* Button color */
+            color: #fff;
+            /* Button text color */
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #14213D;
+            /* Button hover color */
+        }
+
+        #error {
+            color: #E76F51;
+            /* Error message color */
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -10,7 +91,7 @@
         <input type="text" name="username" placeholder="Username"><br>
         <div class="passwordLine">
             <input type="password" name="password" id="password" placeholder="Password">
-            <label class="lock" onclick=toggleVisibility(event)>&#x1F512;</label>
+            <label class="lock" onclick="toggleVisibility(event)">&#x1F512;</label>
         </div>
         <div class="login">
             <button name="mode" value="LOGIN">Login</button>
@@ -22,13 +103,13 @@
 
     <script type="text/javascript">
         function toggleVisibility(event) {
-            let x = document.getElementById("password")
+            let x = document.getElementById("password");
             if (x.type === "password") {
                 x.type = "text";
-                event.target.innerHTML = "&#x1F441;"
+                event.target.innerHTML = "&#x1F441;";
             } else {
                 x.type = "password";
-                event.target.innerHTML = "&#x1F512;"
+                event.target.innerHTML = "&#x1F512;";
             }
         }
 

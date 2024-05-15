@@ -15,7 +15,8 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            background: #E9C46A;
+            background: #fff;
+            /* Background color */
             padding: 1.25em;
         }
 
@@ -31,6 +32,7 @@
 
         .editable th.edit {
             background: #f8ff88;
+            /* Editable cell background color */
         }
 
         .header {
@@ -44,6 +46,7 @@
             font-weight: bold;
             font-size: 2em;
             color: #264653;
+            /* Header text color */
             margin-right: auto;
         }
 
@@ -56,6 +59,7 @@
         table {
             font-weight: bold;
             color: #264653;
+            /* Table text color */
             border: 1px solid black;
             border-collapse: collapse;
         }
@@ -67,34 +71,46 @@
 
         tr:hover {
             background: #EDD69C;
+            /* Hover color */
         }
 
         #cell:hover {
             cursor: auto;
         }
 
-        /* Iffy about this if it doesn't work then remove */
         .results {
             user-select: none;
-            /* standard syntax */
             -webkit-user-select: none;
-            /* webkit (safari, chrome) browsers */
             -moz-user-select: none;
-            /* mozilla browsers */
             -khtml-user-select: none;
-            /* webkit (konqueror) browsers */
             -ms-user-select: none;
-            /* IE10+ */
         }
 
         .join {
+            position: absolute;
             top: 2%;
-            left: 90%;
+            right: 2%;
+            /* Adjusted position */
             width: 7em;
             height: 2.2em;
-            position: absolute;
             z-index: 2;
-            background: black;
+        }
+
+        .join button {
+            background: #FCA311;
+            /* Button color */
+            color: #fff;
+            /* Button text color */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .join button:hover {
+            background: #14213D;
+            /* Button hover color */
         }
     </style>
 
@@ -102,12 +118,14 @@
 </head>
 
 <body>
-    <span class="header">
+    <div class="header">
         <h1>{{ tournament }} Results</h1>
-    </span>
+    </div>
+    {% if is_to %}
     <div class="join">
         <button name="Join" value="JOIN" onclick="join_tournament()">Join Tournament</button>
     </div>
+    {% endif %}
 
     <div class="results">
         <table class="editable" id="table">
@@ -127,7 +145,7 @@
         </table>
         {% if is_to %}
         <button onclick="save()">
-        Save
+            Save
         </button>
         {% endif %}
     </div>
@@ -135,9 +153,7 @@
 
 </html>
 
-
 <script>
-
     // Verification of whether tournament organizer is editing:
     const is_to = "{{ is_to }}";
     console.log(is_to);
@@ -239,17 +255,14 @@
 
         fetch(route, requestOptions)
     }
-    function join_tournament(){
+    function join_tournament() {
         const url = String(window.location)
-        
+
         const requestOptions = {
-            method: "POST", 
+            method: "POST",
         };
 
         fetch(url, requestOptions).then(response => console.log('created tournament'))
 
     }
-
-
-
 </script>
