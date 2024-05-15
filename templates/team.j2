@@ -105,13 +105,11 @@
 
     <div class="tournaments">
         <table class="editable">
-            {% for row in participated_events %}
             <tr class="row">
-                {% for cell in row %}
+                {% for cell in participated_events %}
                 <th id="cell"> {{cell}} </th>
                 {% endfor %}
             </tr>
-            {% endfor %}
         </table>
     </div>
 
