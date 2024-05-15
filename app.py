@@ -52,16 +52,15 @@ def tournament(tournament_name: str):
         else:
             return send_file("static/404.html")
     elif request.method == 'PUT':
+        update_row("a", "mallard_creek", {'b': 1, 'c': 2, 'd':5})
         data = request.get_json()
         events = get_events(tournament_name)
-        print(data)
-        print(events)
         for team_results in data:
             new_data = {}
             team = team_results[0]
             for i in range(len(events)):
-                new_data[events[i]] = team_results[i + 1]
-            if not update_row(tournament_name, team, new_data):
+                new_data[events[i]] = int(team_results[i + 1])
+            if not update_row(tournament_name, team.strip(), new_data):
                 return jsonify("fail")
             
 
