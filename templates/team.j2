@@ -2,131 +2,27 @@
 <html lang="en">
 
 <head>
-    <style>
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            background-color: #001219;
-            /* Dark blue background */
-            color: #94d2bd;
-            /* Light greenish text color */
-            font-family: Verdana, sans-serif;
-        }
-
-        #container {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            padding: 1em;
-            width: 100%;
-        }
-
-        #avatar {
-            border: 5px solid #ee9b00;
-            /* Border color for avatar */
-            border-radius: 5px;
-        }
-
-        #games {
-            padding-left: 1em;
-            color: #94d2bd;
-            /* Ensuring game text color matches */
-        }
-
-        #user,
-        form {
-            text-align: center;
-        }
-
-        input,
-        button {
-            padding: 5px;
-            margin: 5px;
-            font-size: 1em;
-            border-radius: 5px;
-            border: 2px solid #94d2bd;
-            /* Border color for inputs and buttons */
-            background-color: #0a9396;
-            /* Lighter teal background */
-            color: #001219;
-            /* Dark blue text color for contrast */
-        }
-
-        input:hover,
-        button:hover {
-            border-color: #ca6702;
-            /* Hover effect for inputs and buttons */
-        }
-
-        h1,
-        h2 {
-            padding: 0.5em;
-            color: #e9d8a6;
-            /* Lighter yellow text for headers */
-        }
-
-        #file,
-        #password {
-            width: 225px;
-            /* Consistent width for file input and password */
-        }
-
-        .header {
-            font-weight: bold;
-            background-color: #005f73;
-            /* Dark teal background for header */
-        }
-
-        .prof {
-            color: #e9d8a6;
-            text-decoration: underline;
-        }
-
-        ::placeholder {
-            color: #e9d8a6;
-        }
-
-        .grid-container {
-            display: inline-grid;
-            grid-template-columns: auto;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 20px;
-            /* Added margin for spacing */
-        }
-
-        .grid-item {
-            background-color: #fff;
-            text-align: center;
-            border: 1px solid #14213D;
-            /* Accent border color */
-            padding: 10px;
-            /* Added padding for spacing */
-            border-radius: 5px;
-            /* Added border-radius for rounded corners */
-        }
-    </style>
-    <title>{{ user }}'s Profile</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <title>{{ user }}</title>
 </head>
 
 <body>
     <h1>
-        {{ user }}'s Profile:
+        {{ user }}'s History:
     </h1>
-    <div id="container">
+    {# <div id="container">
         <form action="/logout" method="post" id="user">
-            <h2><a href="/profile" class="prof">List of All Profiles</a></h2>
             <br>
             <button name="LOGOUT" value="logout" id="logout">Logout</button>
-        </form>
+        </form> #}
     </div>
 
     <div class="grid-container">
         {% for cell in participated_events %}
-        <div class="grid-item"> {{cell}} </div>
+        <div class="grid-item"> <a href="/tournaments/{{cell}}"> {{cell}} </a></div>
         {% endfor %}
     </div>
+    <a href="/" class="prof">List of All Tournaments</a>
 
 </body>
 
