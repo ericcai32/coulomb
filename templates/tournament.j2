@@ -2,25 +2,11 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="/static/style.css">
     <style>
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-        }
-
-        body {
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background: #E9C46A;
-            padding: 1.25em;
-        }
-
         .editable {
             border-collapse: collapse;
+            margin-left: 1vw;
         }
 
         .editable th,
@@ -31,6 +17,7 @@
 
         .editable th.edit {
             background: #f8ff88;
+            /* Editable cell background color */
         }
 
         .header {
@@ -44,6 +31,7 @@
             font-weight: bold;
             font-size: 2em;
             color: #264653;
+            /* Header text color */
             margin-right: auto;
         }
 
@@ -56,6 +44,7 @@
         table {
             font-weight: bold;
             color: #264653;
+            /* Table text color */
             border: 1px solid black;
             border-collapse: collapse;
         }
@@ -67,34 +56,45 @@
 
         tr:hover {
             background: #EDD69C;
+            /* Hover color */
         }
 
         #cell:hover {
             cursor: auto;
         }
 
-        /* Iffy about this if it doesn't work then remove */
         .results {
             user-select: none;
-            /* standard syntax */
             -webkit-user-select: none;
-            /* webkit (safari, chrome) browsers */
             -moz-user-select: none;
-            /* mozilla browsers */
             -khtml-user-select: none;
-            /* webkit (konqueror) browsers */
             -ms-user-select: none;
-            /* IE10+ */
         }
 
         .join {
-            top: 2%;
-            left: 90%;
-            width: 7em;
-            height: 2.2em;
             position: absolute;
+            top: 2%;
+            right: 2%;
+            /* Adjusted position */
+            height: 2.2em;
             z-index: 2;
-            background: black;
+        }
+
+        .join button {
+            background: var(--dark-1);
+            /* Button color */
+            /* Button text color */
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            padding: 1em 1em;
+        }
+
+        .join button:hover {
+            background: #ef9603;
+            /* Button hover color */
         }
     </style>
 
@@ -102,31 +102,48 @@
 </head>
 
 <body>
-    <span class="header">
+    <div class="header">
         <h1>{{ tournament }} Results</h1>
-    </span>
+    </div>
+    {% if is_to %}
     <div class="join">
         <button name="Join" value="JOIN" onclick="join_tournament()">Join Tournament</button>
     </div>
+    {% endif %}
 
     <div class="results">
-        <table class="editable">
+        <table class="editable" id="table">
+            <tr>
+                <td>School</td>
+                {% for event in events %}
+                <td>{{event}}</td>
+                {% endfor %}
+            </tr>
             {% for row in data %}
             <tr class="row">
                 {% for cell in row %}
-                <th id="cell"> {{cell}} </th>
+                    {% if cell|string == 'None' %}
+                        <th id="cell"></th>
+                    {% else %}
+                        <th id="cell"> {{cell}} </th>
+                    {% endif %}
                 {% endfor %}
             </tr>
             {% endfor %}
         </table>
+        {% if is_to %}
+        <div>
+        <button class="save" onclick="save()">
+            Save
+        </button>
+        </div>
+        {% endif %}
     </div>
 </body>
 
 </html>
 
-
 <script>
-
     // Verification of whether tournament organizer is editing:
     const is_to = "{{ is_to }}";
     console.log(is_to);
@@ -202,18 +219,40 @@
         };
     }
 
+    function save() {
+        let data = []
+        let table = document.getElementById("table")
+        let rows = table.getElementsByTagName("tr")
+        for (let i = 0; i < rows.length; i++) {
+            let cells = rows[i].getElementsByTagName("th")
+            let data_row = []
+            for (let j = 0; j < cells.length; j++) {
+                let cell = cells[j].textContent
+                data_row.push(cell)
+            }
+            data.push(data_row)
+        }
 
-    function join_tournament(){
-        const url = String(window.location)
-        
+        route = "{{tournament}}"
+
+        json_data = JSON.stringify(data.slice(1))
+
         const requestOptions = {
-            method: "POST", 
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: json_data
+        }
+
+        fetch(route, requestOptions)
+    }
+    function join_tournament() {
+        const url = String(window.location)
+
+        const requestOptions = {
+            method: "POST",
         };
 
         fetch(url, requestOptions).then(response => console.log('created tournament'))
 
     }
-
-
-
 </script>

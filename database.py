@@ -125,7 +125,7 @@ def update_row(tourny_name, team, data):
         scores.append(data[event])
     for i in range(len(scores)):
         cur.execute(f'UPDATE {tourny_name} SET {event_names[i]} = {scores[i]} WHERE Team = ?', (team, ))
-    con.commit()
+        con.commit()
     con.close()
     return True
 

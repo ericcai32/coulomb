@@ -2,58 +2,17 @@
 <html lang="en">
 
 <head>
-    <title>Tournaments Directory</title>
-    <style>
-        body {
-            display: flex;
-            align-items: flex-start;
-            justify-content: flex-start;
-            font-family: Verdana, sans-serif;
-            background-color: #264653;
-            /* Background color */
-            color: #94d2bd;
-            /* Text color */
-            padding: 10px;
-            margin: 0;
-            min-height: 100vh;
-            text-align: left;
-        }
-
-        #users {
-            padding: 20px;
-            background-color: #2A9D8F;
-            /* Background color */
-            border-radius: 10px;
-            border: 3px solid #0a9396;
-            width: auto;
-        }
-
-        a {
-            color: #E9C46A;
-            /* Link color */
-            font-size: 1.2em;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        a:hover {
-            color: #F4A261;
-            /* Hover color */
-        }
-
-        label {
-            font-size: 1.8em;
-            font-weight: bold;
-            color: #F4A261;
-            /* Label color */
-        }
-    </style>
+    <title>All Tournaments</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div id="tournaments">
-        <label>List of All Tournaments</label>
+
+    <h1>All Tournaments</h1>
+    <div class="tournaments" id="tournaments">
         <script type="text/javascript">
             const profiles = {{ tournaments }};
             const container = document.getElementById("tournaments");
@@ -66,6 +25,7 @@
             });
         </script>
     </div>
+    <a class="new-button" href="/new">Create Tournament</a>
 </body>
 
 </html>
