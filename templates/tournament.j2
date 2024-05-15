@@ -110,7 +110,7 @@
     </div>
 
     <div class="results">
-        <table class="editable">
+        <table class="editable" id="table">
             <tr>
                 <td>School</td>
                 {% for event in events %}
@@ -125,6 +125,11 @@
             </tr>
             {% endfor %}
         </table>
+        {% if is_to %}
+        <button onclick="save()">
+        Save
+        </button>
+        {% endif %}
     </div>
 </body>
 
@@ -208,7 +213,32 @@
         };
     }
 
+    function save() {
+        let data = []
+        let table = document.getElementById("table")
+        let rows = table.getElementsByTagName("tr")
+        for (let i = 0; i < rows.length; i++) {
+            let cells = rows[i].getElementsByTagName("th")
+            let data_row = []
+            for (let j = 0; j < cells.length; j++) {
+                let cell = cells[j].textContent
+                data_row.push(cell)
+            }
+            data.push(data_row)
+        }
 
+        route = "{{tournament}}"
+
+        json_data = JSON.stringify(data.slice(1))
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: json_data
+        }
+
+        fetch(route, requestOptions)
+    }
     function join_tournament(){
         const url = String(window.location)
         

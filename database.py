@@ -15,7 +15,7 @@ def create_tournament(tournament_name, events, creator):
         return False
     con = sqlite3.connect('users.db')
     cur = con.cursor()
-    cur.execute(f'CREATE TABLE IF NOT EXISTS {tournament_name} (id INTEGER PRIMARY KEY AUTOINCREMENT, Team String)')
+    cur.execute(f'CREATE TABLE IF NOT EXISTS {tournament_name} (Team String)')
     for event in events:
         cur.execute(f'ALTER TABLE {tournament_name} ADD {event} TEXT')
     cur.execute('INSERT INTO tournaments (name, creator) VALUES (?, ?)', (tournament_name, creator))
@@ -125,7 +125,7 @@ def update_row(tourny_name, team, data):
         scores.append(data[event])
     for i in range(len(scores)):
         cur.execute(f'UPDATE {tourny_name} SET {event_names[i]} = {scores[i]} WHERE Team = ?', (team, ))
-    con.commit()
+        con.commit()
     con.close()
     return True
 
@@ -171,7 +171,7 @@ def get_events(tourny_name):
     cur = con.cursor()
     cur.execute(f'PRAGMA table_info({tourny_name})')
     data = cur.fetchall()
-    for i in range(2, len(data)):
+    for i in range(1, len(data)):
         rtn.append(data[i][1])
     con.close()
     return rtn
