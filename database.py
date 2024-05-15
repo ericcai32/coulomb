@@ -171,7 +171,7 @@ def get_events(tourny_name):
     cur = con.cursor()
     cur.execute(f'PRAGMA table_info({tourny_name})')
     data = cur.fetchall()
-    for i in range(2, len(data)):
+    for i in range(1, len(data)):
         rtn.append(data[i][1])
     con.close()
     return rtn
