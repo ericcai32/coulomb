@@ -86,14 +86,27 @@
             -ms-user-select: none;
             /* IE10+ */
         }
+
+        .join {
+            top: 2%;
+            left: 90%;
+            width: 7em;
+            height: 2.2em;
+            position: absolute;
+            z-index: 2;
+            background: black;
+        }
     </style>
 
     <title>{{ tournament }}</title>
 </head>
 
 <body>
-    <div class="header">
+    <span class="header">
         <h1>{{ tournament }} Results</h1>
+    </span>
+    <div class="join">
+        <button name="Join" value="JOIN">Join Tournament</button>
     </div>
 
     <div class="results">
