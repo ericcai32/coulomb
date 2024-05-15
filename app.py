@@ -20,7 +20,7 @@ def index():
 
 @app.route('/new', methods=('GET', 'POST'))
 def new():
-    is_logged = check_session() # database.check_to() figure out if user is a to, or i think we just check if logged in here
+    is_logged = check_session()
     if not is_logged:
         return redirect('/login')
     if request.method == 'POST':
@@ -46,8 +46,10 @@ def tournament(tournament_name: str):
             user = get_session(token)
             is_to = verify_creator(user, tournament_name)
         tournament_results = read_table(tournament_name)
+        tournament_events = get_events(tournament_name)
+        print(tournament_events)
         tournament_results = [["polo ridge", 1, 3, 1], ["metrolina", 2, 1, 3], ["saksham elementary", 3, 2, 2]]
-        return render_template('tournament.j2', tournament=tournament_name, data=tournament_results, is_to=is_to)
+        return render_template('tournament.j2', tournament=tournament_name, events=tournament_events, data=tournament_results, is_to=is_to)
     else:
         return send_file("static/404.html")
     
