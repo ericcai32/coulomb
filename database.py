@@ -5,7 +5,7 @@ import hashlib
 
 con = sqlite3.connect('users.db')
 cur = con.cursor() 
-cur.execute('CREATE TABLE IF NOT EXISTS tournaments (name TEXT, creator TEXT);')
+cur.execute('CREATE TABLE IF NOT EXISTS tournaments (name TEXT, creator TEXT, schools TEXT);')
 cur.execute('CREATE TABLE IF NOT EXISTS accounts (id INTEGER PRIMARY KEY AUTOINCREMENT, name STRING, password STRING, salt STRING)')    
 con.commit()
 con.close()
@@ -47,20 +47,18 @@ def add_to_table(tournament_name, school_name, data):
     cur.execute(f'INSERT INTO {tournament_name} (Team) VALUES (?)', (school_name, ))
     cur.execute(f'SELECT schools FROM tournaments WHERE name=?', (tournament_name, ))
     schools = str(cur.fetchall()[0][0]).split()
-    print(schools)
     if schools[0] == 'None':
         schools = []
     if school_name not in schools:
         schools.append(school_name)
 
-    print(schools)
     schools = ' '.join(map(str, schools))
-    print(schools)
     cur.execute(f'UPDATE tournaments SET schools=? WHERE name=?', (schools, tournament_name))
     for i in range(len(scores)):
         cur.execute(f'UPDATE {tournament_name} SET {event_names[i]} = {scores[i]} WHERE Team = ?', (school_name, ))
     con.commit()
     con.close()
+    print('adding')
     return True
 
 def register(username, password):
@@ -150,20 +148,46 @@ def get_all_tournaments():
         rtn.append(name[0])
     return rtn
 
-def get_participated_events():
+def get_participated_events(school_name):
+    rtn = []
     con = sqlite3.connect('users.db')
     cur = con.cursor()
-    cur.execute('SELECT')
+    cur.execute('SELECT name FROM tournaments')
+    tourny_names = []
+    data = cur.fetchall()
+    for name in data:
+        tourny_names.append(name[0])
+    for tourny in tourny_names:
+        cur.execute('SELECT schools FROM tournaments WHERE name=?', (tourny, ))
+        tournys = str(cur.fetchall()[0][0]).split()
+        if school_name in tournys:
+            rtn.append(tourny)
+    con.close()
+    return rtn
 
-'''
-con = sqlite3.connect('users.db')
-cur = con.cursor()
-cur.execute('SELECT name FROM tournaments')
-tourny_names = []
-data = cur.fetchall()
-for name in data:
-    tourny_names.append(name[0])
-for tourny in tourny_names:
-    cur.execute('SELECT schools FROM ')
-con.close()
-'''
+def get_events(tourny_name):
+    rtn = []
+    con = sqlite3.connect('users.db')
+    cur = con.cursor()
+    cur.execute(f'PRAGMA table_info({tourny_name})')
+    data = cur.fetchall()
+    for i in range(2, len(data)):
+        rtn.append(data[i][1])
+    con.close()
+    return rtn
+
+def get_placements(team_name):
+    rtn = {}
+    con = sqlite3.connect('users.db')
+    cur = con.cursor()
+    data = get_participated_events(team_name)
+    for event in data:
+        temp_list = []
+        cur.execute(f'SELECT * FROM {event} WHERE Team=?', (team_name, ))
+        data = cur.fetchall()[0]
+        for i in range(2, len(data)):
+            temp_list.append(data[i])
+        rtn[event] = temp_list
+    con.close()
+    print(rtn)
+    return rtn
