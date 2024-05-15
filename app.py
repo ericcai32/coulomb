@@ -75,11 +75,8 @@ def add_tournament(tournament_name):
 
 @app.route('/teams/<team_name>', methods=('GET', 'POST'))
 def team(team_name: str):
-    team_exists = True # FIX THIS
-    if team_exists:
-        return f"[TEAM PAGE FOR {team_name}]"
-    else:
-        return send_file("static/404.html")
+    data = get_participated_events(team_name)
+    return render_template('team.j2', participated_events=data)
 
 @app.route('/teams/<team_name>/<participant_name>')
 def participant(team_name: str, participant_name: str):

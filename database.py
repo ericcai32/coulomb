@@ -15,7 +15,7 @@ def create_tournament(tournament_name, events, creator):
         return False
     con = sqlite3.connect('users.db')
     cur = con.cursor()
-    cur.execute(f'CREATE TABLE IF NOT EXISTS {tournament_name} (id INTEGER PRIMARY KEY AUTOINCREMENT, Team String)')
+    cur.execute(f'CREATE TABLE IF NOT EXISTS {tournament_name} (Team String)')
     for event in events:
         cur.execute(f'ALTER TABLE {tournament_name} ADD {event} TEXT')
     cur.execute('INSERT INTO tournaments (name, creator) VALUES (?, ?)', (tournament_name, creator))
