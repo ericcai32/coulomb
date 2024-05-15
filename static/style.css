@@ -1,78 +1,166 @@
+:root {
+    --light-1: #E5E5E5;
+    --light-2: #FFFFFF;
+    --dark-1: #FCA311;
+    --dark-2: #14213D;
+}
+
 * {
-    padding: 0;
-    margin: 0;
     box-sizing: border-box;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+
+    font-family: 'Lato', sans-serif;
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #001219; /* Deep blue background */
+    background-color: var(--light-1); /* Deep blue background */
 }
 
-.form {
-    display: grid;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 20px;
-    border: 5px solid;
-    border-color: #005f73; /* Dark teal border */
-    padding: 20px;
-    background-color: #94d2bd; /* Light teal background */
+a.new-button {
+    position: absolute;
+    top: 1vw;
+    right: 1vw;
+    padding: 1em;
+    background-color: var(--dark-1);
+    color: black;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.passwordLine {
-    display: flex;
-    align-items: center;
+a.new-button:hover {
+    background-color: #ef9603;
 }
 
-.login > button {
-    padding: 5px;
-    font-size: 1.5em;
-    border-radius: 5px;
-    border-color: #ca6702; /* Dark orange */
-    background-color: #ee9b00; /* Bright orange */
-    color: #001219; /* Dark blue text for contrast */
+a.prof {
+    margin-left: 1vw;
 }
 
 button {
-    color: #001219; /* Dark blue text */
-    background-color: #94d2bd; /* Light teal background */
-    border-color: #005f73; /* Dark teal border */
-    font-weight: bold;
+    margin: 1em;
+    padding: 1em 4em;
+    background-color: var(--dark-1);
+    color: black;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ef9603;
+}
+
+button.save {
+    margin-left: 1vw;
+}
+
+div.tournaments {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1vw;
+}
+
+div.tournaments > a {
+    margin-top: 1em;
+    font-size: 1.2em;
+}
+
+div.login {
+    margin-top: 2em;
+}
+
+div.tournament-name {
+    display: block;
+    text-align: center;
+}
+
+div.event_form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    user-select: none;
+}
+
+div.event_form > input{
+    margin: 0;
+}
+
+div.container {
+    display: flex;
+    justify-content: center;
+    padding-top: 10vh;
+}
+
+div.grid-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1vw;
+}
+
+div.grid-container > div > a {
+    margin-top: 1em;
+    font-size: 1.2em;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 35vw;
+    padding: 3em;
+    border-radius: 4px;
+
+    background-color: var(--light-2);
+}
+
+form > h1 {
+    margin-top: 0;
+    margin-left: 0;
+}
+
+h1 {
+    margin-top: 1vw;
+    margin-left: 1vw;
+    font-size: 2.5em;
+    text-decoration: underline;
+    text-decoration-color: var(--dark-1);
+
+    color: var(--dark-2)
+}
+
+label.lock {
+    position: relative;
+    bottom: 2em;
+    left: 9vw;
+    cursor: pointer;
+    user-select: none;
+}
+
+label.error {
+    color: red;
 }
 
 input {
-    padding: 5px;
-    font-size: 2em;
-    border-radius: 5px;
-    border-color: #0a9396; /* Soft greenish teal */
-    background-color: #e9d8a6; /* Light beige */
-    color: #005f73; /* Text color */
+    width: 20vw;
+    height: 3em;
+    padding: 10px;
+    margin-top: 1em;
 }
 
-input:hover {
-    border-color: #0a9396;
-}
-
-#error {
-    color: #bb3e03; /* Deep orange-red */
-    font-size: 1em;
-    text-align: center;
-    padding-top: 1em;
-}
-
-label {
-    padding-left: 10px;
-    font-size: 2em;
-    background-color: #e9d8a6; /* Light beige background */
-    color: #9b2226; /* Dark red text for good visibility */
-}
-
-.login {
+section.centered {
     display: flex;
-    justify-content: space-evenly;
-    padding-top: 1em;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+span {
+    cursor: pointer;
+
+    font-size: 1.3em;
 }

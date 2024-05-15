@@ -2,110 +2,18 @@
 <html lang="en">
 
 <head>
-    <style>
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-        }
-
-        body {
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(to top right, #E76F51 0%, #E9C46A 100%);
-        }
-
-        .container {
-            max-width: 37em;
-            background: #fff;
-            border-radius: 0.5em;
-            width: 37em;
-            padding: 1.25em;
-            box-shadow: 0 0.1em .1em 0.5em rgba(0, 0, 0, 0.1);
-        }
-
-        .event_form {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2.5em;
-            padding-bottom: 0.625em;
-            border-bottom: 0.01em solid #fff;
-        }
-
-        .event_form label {
-            color: #14213D;
-            /* Accent color for labels */
-        }
-
-        .flex {
-            display: flex;
-            gap: 1.5em;
-        }
-
-        .delete {
-            text-decoration: none;
-            display: inline-block;
-            background: #FCA311;
-            /* Button background color */
-            color: #fff;
-            font-size: 1.5rem;
-            font-weight: normal;
-            width: 1.875em;
-            height: 1.875em;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            border: none;
-            border-radius: 50%;
-            /* Make button round */
-        }
-
-        .add {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 0.25em;
-        }
-
-        input[type="text"] {
-            padding: 0.5em;
-            border: 1px solid #14213D;
-            /* Input border color */
-            border-radius: 0.25em;
-            width: 75%;
-            /* Adjusted input width */
-        }
-
-        .submit button {
-            padding: 0.5em 1em;
-            background-color: #FCA311;
-            /* Button background color */
-            color: #fff;
-            border: none;
-            border-radius: 0.25em;
-            cursor: pointer;
-        }
-
-        .submit button:hover {
-            background-color: #e76f51;
-            /* Button hover background color */
-        }
-    </style>
-
+    <link rel="stylesheet" href="/static/style.css">
     <title>Add Events</title>
 </head>
 
 <body>
     <div class="container">
         <form method="POST" action="/new">
+            <div class="tournament-name">
+                <label class="tournament_name">Tournament Name:</label><br>
+                <input type="text" name="name"><br>
+            </div>
             <span class="add">&plus;</span>
-            <label class="tournament_name">Name of the Tournament:</label><br>
-            <input type="text" name="name"><br>
             <div class="event_form">
                 <label>Add Event:</label>
                 <input type="text" name="event">

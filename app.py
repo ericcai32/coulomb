@@ -75,7 +75,9 @@ def add_tournament(tournament_name):
 @app.route('/teams/<team_name>', methods=('GET', 'POST'))
 def team(team_name: str):
     data = get_participated_events(team_name)
-    return render_template('team.j2', participated_events=data)
+    token = request.cookies.get('token')
+    user = get_session(token)
+    return render_template('team.j2', participated_events=data, user=user)
 
 @app.route('/teams/<team_name>/<participant_name>')
 def participant(team_name: str, participant_name: str):

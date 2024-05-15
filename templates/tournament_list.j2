@@ -2,86 +2,17 @@
 <html lang="en">
 
 <head>
-    <title>Tournaments Directory</title>
-    <style>
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: Verdana, sans-serif;
-            background-color: #fff;
-            /* Background color */
-            color: #000;
-            /* Text color */
-            padding: 20px;
-            margin: 0;
-            min-height: 100vh;
-            text-align: center;
-        }
-
-        .button-container {
-            margin-bottom: 20px;
-        }
-
-        button {
-            background-color: #FCA311;
-            /* Button color */
-            color: #fff;
-            /* Button text color */
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.2em;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #14213D;
-            /* Button hover color */
-        }
-
-        #tournaments {
-            padding: 20px;
-            background-color: #E5E5E5;
-            /* Background color */
-            border-radius: 10px;
-            border: 3px solid #000;
-            /* Border color */
-            width: 300px;
-            text-align: left;
-        }
-
-        label {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #000;
-            /* Label color */
-            margin-bottom: 10px;
-            display: block;
-        }
-
-        a {
-            color: #14213D;
-            /* Link color */
-            font-size: 1.2em;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        a:hover {
-            color: #FCA311;
-            /* Link hover color */
-        }
-    </style>
+    <title>All Tournaments</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="button-container">
-        <button value="CREATE">Create Tournament</button>
-    </div>
-    <div id="tournaments">
-        <label>List of All Tournaments</label>
+
+    <h1>All Tournaments</h1>
+    <div class="tournaments" id="tournaments">
         <script type="text/javascript">
             const profiles = {{ tournaments }};
             const container = document.getElementById("tournaments");
@@ -94,6 +25,7 @@
             });
         </script>
     </div>
+    <a class="new-button" href="/new">Create Tournament</a>
 </body>
 
 </html>
