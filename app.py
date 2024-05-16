@@ -42,13 +42,14 @@ def tournament(tournament_name: str):
         tournament_exists = not check_exists(tournament_name)
         if tournament_exists:
             is_to = False
-            if check_session():
+            is_logged = check_session()
+            if is_logged:
                 token = request.cookies.get('token')
                 user = get_session(token)
                 is_to = verify_creator(user, tournament_name)
             tournament_results = read_table(tournament_name)
             tournament_events = get_events(tournament_name)
-            return render_template('tournament.j2', tournament=tournament_name, events=tournament_events, data=tournament_results, is_to=is_to)
+            return render_template('tournament.j2', tournament=tournament_name, events=tournament_events, data=tournament_results, is_to=is_to, is_logged=is_logged)
         else:
             return send_file("static/404.html")
     elif request.method == 'PUT':
@@ -75,9 +76,13 @@ def add_tournament(tournament_name):
 @app.route('/teams/<team_name>', methods=('GET', 'POST'))
 def team(team_name: str):
     data = get_participated_events(team_name)
-    token = request.cookies.get('token')
-    user = get_session(token)
-    return render_template('team.j2', participated_events=data, user=user)
+    # token = request.cookies.get('token')
+    # user = get_session(token)
+    tournament_events = {}
+    for tournament in data:
+        tournament_events[tournament] = get_events(tournament)
+    placements = get_placements(team_name)
+    return render_template('team.j2', participated_events=data, user=team_name, tournament_events=tournament_events, placements=placements)
 
 @app.route('/teams/<team_name>/<participant_name>')
 def participant(team_name: str, participant_name: str):
