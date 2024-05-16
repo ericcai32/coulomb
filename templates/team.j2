@@ -19,19 +19,19 @@
 
     <div class="grid-container">
         {% for tournament in participated_events %}
-            <div class="grid-item"> <a href="/tournaments/{{tournament}}"> {{tournament}} </a></div>
-            <table>
-                <tr>
-                    {% for event in tournament_events[tournament] %}
-                        <th>{{event}}</th>
-                    {% endfor %}
-                </tr>
-                <tr>
-                    {% for placement in placements[tournament] %}
-                        <td>{{placement}}</td>
-                    {% endfor %} 
-                </tr>
-            </table>
+        <div class="grid-item"> <a href="/tournaments/{{tournament}}"> {{tournament}} </a></div>
+        <table>
+            <tr>
+                {% for event in tournament_events[tournament] %}
+                <th>{{event}}</th>
+                {% endfor %}
+            </tr>
+            <tr>
+                {% for placement in placements[tournament] %}
+                <td>{{placement}}</td>
+                {% endfor %}
+            </tr>
+        </table>
         {% endfor %}
     </div>
     <a href="/" class="prof">List of All Tournaments</a>
@@ -41,5 +41,5 @@
 </html>
 
 <script>
-    console.log({{placements}})
+    console.log({{ placements }})
 </script>
