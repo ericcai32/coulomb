@@ -105,11 +105,11 @@
     <div class="header">
         <h1>{{ tournament }} Results</h1>
     </div>
-    {% if is_to %}
+
     <div class="join">
         <button name="Join" value="JOIN" onclick="join_tournament()">Join Tournament</button>
     </div>
-    {% endif %}
+
 
     <div class="results">
         <table class="editable" id="table">
@@ -122,20 +122,20 @@
             {% for row in data %}
             <tr class="row">
                 {% for cell in row %}
-                    {% if cell|string == 'None' %}
-                        <th id="cell"></th>
-                    {% else %}
-                        <th id="cell"> {{cell}} </th>
-                    {% endif %}
+                {% if cell|string == 'None' %}
+                <th id="cell"></th>
+                {% else %}
+                <th id="cell"> {{cell}} </th>
+                {% endif %}
                 {% endfor %}
             </tr>
             {% endfor %}
         </table>
         {% if is_to %}
         <div>
-        <button class="save" onclick="save()">
-            Save
-        </button>
+            <button class="save" onclick="save()">
+                Save
+            </button>
         </div>
         {% endif %}
     </div>
