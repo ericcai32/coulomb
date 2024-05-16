@@ -10,6 +10,12 @@ cur.execute('CREATE TABLE IF NOT EXISTS accounts (id INTEGER PRIMARY KEY AUTOINC
 con.commit()
 con.close()
 
+con = sqlite3.connect('School.db')
+cur = con.cursor()
+cur.execute('CREATE TABLE IF NOT EXISTS teams (team_name TEXT, tournament_name TEXT, event_name TEXT, participant_name TEXT, placement TEXT)')
+con.commit()
+con.close()
+
 def create_tournament(tournament_name, events, creator):
     if check_exists(tournament_name) == False:
         return False
@@ -185,9 +191,31 @@ def get_placements(team_name):
         temp_list = []
         cur.execute(f'SELECT * FROM {event} WHERE Team=?', (team_name, ))
         data = cur.fetchall()[0]
-        for i in range(2, len(data)):
+        for i in range(1, len(data)):
             temp_list.append(data[i])
         rtn[event] = temp_list
     con.close()
     print(rtn)
     return rtn
+
+def add_participant(team_name, tournament_name, participant_name, placement, event_name):
+    con = sqlite3.connect('School.db')
+    cur = con.cursor()
+    cur.execute('SELECT placement FROM teams WHERE team_name=? AND tournament_name=? AND participant_name=? AND event_name=?', (team_name, tournament_name, participant_name, event_name))
+    data = cur.fetchall()
+    if not data:
+        cur.execute('INSERT INTO teams (team_name, tournament_name, participant_name, event_name, placement) VALUES (?, ?, ?, ?, ?)', (team_name, tournament_name, participant_name, event_name, placement))
+        con.commit()
+        con.close()
+        return True
+    con.close()
+    return False
+
+def get_participant_data(team_name, tournament_name, participant_name):
+    con = sqlite3.connect('School.db')
+    cur = con.cursor()
+    cur.execute('SELECT event_name, placement FROM teams WHERE team_name=? AND tournament_name=? AND participant_name=?', (team_name, tournament_name, participant_name))
+    data = cur.fetchall()
+    con.close()
+    return data
+
