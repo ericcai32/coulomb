@@ -15,7 +15,7 @@ def begin_session(username: str) -> str:
         username: The user's username.
     Returns:
         The session token.
-    """
+    """ 
     session_token = str(uuid4())
     r.set('token', session_token)
     r.set(session_token, username)
