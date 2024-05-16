@@ -185,7 +185,7 @@ def get_placements(team_name):
         temp_list = []
         cur.execute(f'SELECT * FROM {event} WHERE Team=?', (team_name, ))
         data = cur.fetchall()[0]
-        for i in range(2, len(data)):
+        for i in range(1, len(data)):
             temp_list.append(data[i])
         rtn[event] = temp_list
     con.close()

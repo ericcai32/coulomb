@@ -114,7 +114,6 @@
     <div class="header">
         <h1>{{ tournament }} Results</h1>
     </div>
-
     <div class="join">
         <button name="Join" value="JOIN" onclick="join_tournament()">Join Tournament</button>
     </div>
@@ -265,6 +264,6 @@
         };
 
         fetch(url, requestOptions).then(response => console.log('created tournament'))
-
+        window.location.reload()
     }
 </script>
