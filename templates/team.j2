@@ -83,16 +83,16 @@
 
 <body>
     <h1>
-        {{ user }}'s History:
+        {{ user | replace('_', ' ') }}'s History:
     </h1>
 
     <div class="container">
         {% for tournament in participated_events %}
-        <div class="table-item"><a href="/tournaments/{{tournament}}">{{tournament}}</a></div>
+        <div class="table-item"><a href="/tournaments/{{tournament}}">{{tournament | replace('_', ' ') }}</a></div>
         <table>
             <tr>
                 {% for event in tournament_events[tournament] %}
-                <th>{{event}}</th>
+                <th>{{event | replace('_', ' ') }}</th>
                 {% endfor %}
             </tr>
             <tr>

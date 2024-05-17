@@ -19,7 +19,7 @@
             // Appends every profile stored in the database, one by one, and gives them a link.
             profiles.forEach(profile => {
                 let link = document.createElement('a');
-                link.textContent = profile;
+                link.textContent = profile.replace(/_/g, ' ');
                 link.href = "/tournaments/" + profile;
                 container.appendChild(link);
             });

@@ -16,18 +16,21 @@ cur.execute('CREATE TABLE IF NOT EXISTS teams (team_name TEXT, tournament_name T
 con.commit()
 con.close()
 
-def create_tournament(tournament_name, events, creator):
+def create_tournament(tournament_name, events, creator) -> str:
     if check_exists(tournament_name) == False:
-        return False
+        return "A tournament with that name already exists."
+    if len(events) != len(set(events)): # Check if the event list has any duplicates.
+        return "Event names must be unique."
     con = sqlite3.connect('users.db')
     cur = con.cursor()
     cur.execute(f'CREATE TABLE IF NOT EXISTS {tournament_name} (Team String)')
     for event in events:
+        event = event.replace(' ', '_')
         cur.execute(f'ALTER TABLE {tournament_name} ADD {event} TEXT')
     cur.execute('INSERT INTO tournaments (name, creator) VALUES (?, ?)', (tournament_name, creator))
     con.commit()
     con.close()
-    return True
+    return ""
 
 def read_table(tournament_name):
     if check_exists(tournament_name):

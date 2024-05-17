@@ -112,27 +112,27 @@
 
 <body>
     <div class="header">
-        <h1>{{ tournament }} Results</h1>
+        <h1>{{ tournament | replace('_', ' ') }} Results</h1>
     </div>
-
+    {% if is_logged and not joined %}
     <div class="join">
         <button name="Join" value="JOIN" onclick="join_tournament()">Join Tournament</button>
     </div>
-
+    {% endif %}
 
     <div class="results">
         <table class="editable" id="table">
             <tr>
                 <td>School</td>
                 {% for event in events %}
-                <td>{{event}}</td>
+                <td>{{event | replace('_', ' ') }}</td>
                 {% endfor %}
             </tr>
             {% for row in data %}
             <tr class="row">
                 {% for cell in row %}
                 {% if loop.index0 == 0 %}
-                <th id="cell"><a href="/teams/{{ cell }}">{{ cell }}</a></th>
+                <th id="cell"><a href="/teams/{{ cell }}">{{ cell | replace('_', ' ')}}</a></th>
                 {% elif cell|string == 'None' %}
                 <th id="cell"></th>
                 {% else %}
@@ -265,6 +265,6 @@
         };
 
         fetch(url, requestOptions).then(response => console.log('created tournament'))
-
+        window.location.reload()
     }
 </script>
