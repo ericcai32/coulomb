@@ -23,6 +23,7 @@ def create_tournament(tournament_name, events, creator):
     cur = con.cursor()
     cur.execute(f'CREATE TABLE IF NOT EXISTS {tournament_name} (Team String)')
     for event in events:
+        event = event.replace(' ', '_')
         cur.execute(f'ALTER TABLE {tournament_name} ADD {event} TEXT')
     cur.execute('INSERT INTO tournaments (name, creator) VALUES (?, ?)', (tournament_name, creator))
     con.commit()

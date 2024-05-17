@@ -103,19 +103,20 @@
 
 <body>
     <div class="header">
-        <h1>{{ tournament }} Results</h1>
+        <h1>{{ tournament | replace('_', ' ') }} Results</h1>
     </div>
     {% if is_logged %}
     <div class="join">
         <button name="Join" value="JOIN" onclick="join_tournament()">Join Tournament</button>
     </div>
+    {% endif %}
 
     <div class="results">
         <table class="editable" id="table">
             <tr>
                 <td>School</td>
                 {% for event in events %}
-                <td>{{event}}</td>
+                <td>{{event | replace('_', ' ') }}</td>
                 {% endfor %}
             </tr>
             {% for row in data %}

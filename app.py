@@ -25,11 +25,11 @@ def new():
         return redirect('/login')
     if request.method == 'POST':
         # Get info from post request.
-        tournament_name = request.form['name']
+        tournament_name = request.form['name'].replace(' ', '_')
         events = request.form.getlist('event')
         token = request.cookies.get('token')
         user = get_session(token)
-        if create_tournament(tournament_name, events, user): # implement tournament creator
+        if create_tournament(tournament_name, events, user):
             return redirect(f'tournaments/{tournament_name}')
         else:
             return "Tournament with this name already exists." # Probably should make this prettier
@@ -53,7 +53,6 @@ def tournament(tournament_name: str):
         else:
             return send_file("static/404.html")
     elif request.method == 'PUT':
-        update_row("a", "mallard_creek", {'b': 1, 'c': 2, 'd':5})
         data = request.get_json()
         events = get_events(tournament_name)
         for team_results in data:
@@ -102,7 +101,7 @@ def login_flask():
         On success: Redirects to the index page and stores the session data as cookies.
     """
     if request.method == 'POST':
-        username = request.form['username']
+        username = request.form['username'].replace(' ', '_')
         password = request.form['password']
         if not (username and password):
             return redirect('login')
