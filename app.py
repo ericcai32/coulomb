@@ -76,7 +76,7 @@ def add_tournament(tournament_name):
     add_to_table(tournament_name, get_session(token), {})
     return 'school added'
 
-@app.route('/teams/<team_name>', methods=('GET', 'POST'))
+@app.route('/teams/<team_name>/', methods=('GET', 'POST'))
 def team(team_name: str):
     data = get_participated_events(team_name)
     is_logged = check_session()
@@ -88,12 +88,8 @@ def team(team_name: str):
 
 @app.route('/teams/<team_name>/<participant_name>')
 def participant(team_name: str, participant_name: str):
-    team_exists = True # FIX THIS.
-    participant_exists = True # FIX THIS
-    if team_exists and participant_exists:
-        return f"[PARTICPANT PAGE FOR {participant_name} ON TEAM {team_name}]"
-    else:
-        return "[404 PAGE]"
+    print(get_participated_events(participant_name))
+    return render_template('participants.j2', School=team_name, user=participant_name)
 
 @app.route('/login', methods=('GET', 'POST'))
 def login_flask():
