@@ -15,6 +15,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    """
+    Allows the user to see a list of tournaments.
+    Returns:
+        The rendered tournament_list.j2 template.
+    """
     tournaments = get_all_tournaments()
     is_logged = check_session()
     return render_template('tournament_list.j2', tournaments=tournaments, is_logged=is_logged)
@@ -53,6 +58,9 @@ def tournament(tournament_name: str):
                 is_to = verify_creator(user, tournament_name)
                 joined = user in ([element for row in tournament_results for element in row])
             tournament_events = get_events(tournament_name)
+            results = read_table(tournament_name)
+            if len(results) > 0:
+                joined = joined or results[0][1] != None
             return render_template('tournament.j2', tournament=tournament_name, events=tournament_events, data=tournament_results, is_to=is_to, is_logged=is_logged, joined=joined)
         else:
             return send_file("static/404.html")
