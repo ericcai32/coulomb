@@ -20,10 +20,12 @@
             align-items: flex-start;
             background-color: #F5F5F5;
             padding-left: 1em;
+            position: relative;
         }
 
         h1 {
             color: #000;
+            margin-bottom: 1em;
         }
 
         .prof {
@@ -78,14 +80,86 @@
             text-decoration: underline;
             color: inherit;
         }
+
+        .login {
+            margin-top: 0.5em;
+            color: #14213D;
+            text-decoration: underline;
+        }
+
+        .login:hover {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .participant {
+            position: absolute;
+            bottom: 5em;
+            right: 1em;
+            padding: 0.75em 1em;
+            background-color: #FCA311;
+            color: #000;
+            font-size: 1em;
+            font-weight: bold;
+            border: black solid 1px;
+            border-radius: 0.5em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .participant:hover {
+            background-color: #ef9603;
+        }
+
+        .participant_list {
+            position: absolute;
+            bottom: 1em;
+            right: 1em;
+            padding: 0.75em 1em;
+            background-color: #FCA311;
+            color: #000;
+            font-size: 1em;
+            font-weight: bold;
+            border: black solid 1px;
+            border-radius: 0.5em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .participant_list:hover {
+            background-color: #ef9603;
+        }
+
+        .prof {
+            position: absolute;
+            bottom: 1em;
+            left: 0em;
+            padding: 0.75em 1em;
+            background-color: #FCA311;
+            color: #000;
+            font-size: 1em;
+            font-weight: bold;
+            border: black solid 1px;
+            border-radius: 0.5em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .prof:hover {
+            background-color: #ef9603;
+        }
     </style>
 </head>
 
 <body>
-    <h1>
-        {{ user | replace('_', ' ') }}'s History:
-    </h1>
-
+    <span>
+        <h1>
+            {{ user | replace('_', ' ') }}'s History:
+        </h1>
+    </span>
     <div class="container">
         {% for tournament in participated_events %}
         <div class="table-item"><a href="/tournaments/{{tournament}}">{{tournament | replace('_', ' ') }}</a></div>
@@ -109,6 +183,8 @@
     {% else %}
     <a class="login" href="/login">Log In</a>
     {% endif %}
+    <a class="participant" href="/add_participant/{{team_name}}">Add Participant</a>
+    <a class="participant_list" href="/participant_list/{{team_name}}">See All Participants</a>
 </body>
 
 </html>
