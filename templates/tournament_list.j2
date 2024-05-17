@@ -26,6 +26,11 @@
         </script>
     </div>
     <a class="new-button" href="/new">Create Tournament</a>
+    {% if is_logged %}
+    <a class="login" href="/logout">Log Out</a>
+    {% else %}
+    <a class="login" href="/login">Log In</a>
+    {% endif %}
 </body>
 
 </html>
