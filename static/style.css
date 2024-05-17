@@ -145,6 +145,10 @@ label.error {
     color: red;
 }
 
+p.error {
+    color: red;
+}
+
 input {
     width: 20vw;
     height: 3em;
