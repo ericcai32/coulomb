@@ -219,3 +219,14 @@ def get_participant_data(team_name, tournament_name, participant_name):
     con.close()
     return data
 
+def get_all_participants(team_name):
+    rtn = []
+    con = sqlite3.connect('School.db')
+    cur = con.cursor()
+    cur.execute('SELECT participant FROM teams WHERE team_name=?', (team_name, ))
+    data = cur.fetchall()
+    for participant in data:
+        if participant[0] not in rtn:
+            rtn.append(participant[0])
+    con.close()
+    return rtn

@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <style>
+            form{
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-around;
+            }
+        </style>
+
+    </head>
+    <body>
+        <form method="post">
+            <div>
+                <label for="tournament_name">Tournament Name</label>
+                <input type="text" id="tournament_name" name="tournament_name" required>
+            </div>
+            <div>
+                <label for="event_name">Event Name</label>
+                <input type="text" id="event_name" name="event_name" required>
+            </div>
+            <div>
+                <label for="participant_name">Participant Name</label>
+                <input type="text" id="participant_name" name="participant_name" required>
+            </div>
+            <div>
+                <label for="placement">Placement</label>
+                <input type="text" id="placement" name="placement" required>
+            </div>
+            <input type="submit" value="Add Participant">
+        </form>
+    </body>
+</html>
