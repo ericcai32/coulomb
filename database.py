@@ -366,7 +366,15 @@ def get_all_participants(team_name: str) -> list:
     con.close()
     return rtn
 
-def verify_positive_int(number):
+def verify_positive_int(number: str):
+    '''
+    Verifies that the string is a valid entry for placemtn
+    Params: 
+        numebr: string of number to verify
+    
+    Return:
+        boolean if the string is a postiive int or not
+    '''
     try:
         int(number)
     except:
