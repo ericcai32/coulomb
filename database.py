@@ -29,6 +29,11 @@ def create_tournament(tournament_name: str, events: list, creator: str) -> str:
         return "A tournament with that name already exists."
     if len(events) != len(set(events)): # Check if the event list has any duplicates.
         return "Event names must be unique."
+    for event in events:
+        if verify_positive_int(event[0]):
+            return "Event name must not start with a number"
+    if verify_positive_int(tournament_name[0]):
+        return 'Tournament name must not start with a number'
     con = sqlite3.connect('users.db')
     cur = con.cursor()
     cur.execute(f'CREATE TABLE IF NOT EXISTS {tournament_name} (Team String)')
@@ -38,7 +43,7 @@ def create_tournament(tournament_name: str, events: list, creator: str) -> str:
     cur.execute('INSERT INTO tournaments (name, creator) VALUES (?, ?)', (tournament_name, creator))
     con.commit()
     con.close()
-    return ""
+    return "Table Created"
 
 def read_table(tournament_name: str) -> list:
     '''
