@@ -362,7 +362,8 @@ def get_all_participants(team_name: str) -> list:
     rtn = []
     con = sqlite3.connect('School.db')
     cur = con.cursor()
-    cur.execute('SELECT participant FROM teams WHERE team_name=?', (team_name, ))
+    print(team_name)
+    cur.execute('SELECT participant_name FROM teams WHERE team_name=?', (team_name, ))
     data = cur.fetchall()
     for participant in data:
         if participant[0] not in rtn:

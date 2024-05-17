@@ -262,13 +262,13 @@
         fetch(route, requestOptions)
     }
     function join_tournament() {
+        console.log('clicking')
         const url = String(window.location)
 
         const requestOptions = {
             method: "POST",
         };
 
-        fetch(url, requestOptions).then(response => console.log('created tournament'))
-        window.location.reload()
+        fetch(url, requestOptions).then(response => window.location.reload())
     }
 </script>

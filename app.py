@@ -163,4 +163,10 @@ def app_participant(team_name):
     add_participant(team_name, tournament_name, participant_name, placement, event_name)
     return render_template('add_participant.j2')
 
+@app.route('/participant_list/<team_name>')
+def get_participant_list(team_name):
+    print(team_name)
+    data = get_all_participants(team_name)
+    return render_template('participant_list.j2', participant=data)
+
 app.run(port=8022, debug=True)
