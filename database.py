@@ -76,8 +76,10 @@ def add_to_table(tournament_name: str, school_name: str, data: dict) -> bool:
     for event in data:
         event_names.append(event)
         if not verify_positive_int(data[event]):
+            print('error')
             return False
         scores.append(data[event])
+        print('going through')
     con = sqlite3.connect('users.db')
     cur = con.cursor()
     cur.execute(f'INSERT INTO {tournament_name} (Team) VALUES (?)', (school_name, ))
@@ -195,8 +197,10 @@ def update_row(tourny_name: str, team: str, data: dict) -> bool:
     for event in data:
         event_names.append(event)
         if not verify_positive_int(data[event]):
+            print('error')
             return False
         scores.append(data[event])
+        print('going through')
     for i in range(len(scores)):
         cur.execute(f'UPDATE {tourny_name} SET {event_names[i]} = {scores[i]} WHERE Team = ?', (team, ))
         con.commit()
@@ -375,7 +379,8 @@ def get_all_participants(team_name: str) -> list:
     rtn = []
     con = sqlite3.connect('School.db')
     cur = con.cursor()
-    cur.execute('SELECT participant FROM teams WHERE team_name=?', (team_name, ))
+    print(team_name)
+    cur.execute('SELECT participant_name FROM teams WHERE team_name=?', (team_name, ))
     data = cur.fetchall()
     for participant in data:
         if participant[0] not in rtn:
@@ -392,6 +397,9 @@ def verify_positive_int(number: str):
     Return:
         boolean if the string is a postiive int or not
     '''
+    if number == None or number == 'None':
+        return True
+
     try:
         int(number)
     except:
