@@ -123,13 +123,16 @@
         <table class="editable" id="table">
             <tr>
                 <td>School</td>
+                {# this makes the headers #}
                 {% for event in events %}
                 <td>{{event | replace('_', ' ') }}</td>
                 {% endfor %}
             </tr>
+            {# Nested for loop to go through the 2D array. #}
             {% for row in data %}
             <tr class="row">
                 {% for cell in row %}
+                {# This makes the first column have a link to the team's page. #}
                 {% if loop.index0 == 0 %}
                 <th id="cell"><a href="/teams/{{ cell }}">{{ cell | replace('_', ' ')}}</a></th>
                 {% elif cell|string == 'None' %}
@@ -234,7 +237,12 @@
             }
         };
     }
-
+    /**
+     * Collects data from an HTML table with the id "table", converts it to JSON,
+     * and sends it to a specified server endpoint using a PUT request.
+     *
+     * @returns{void}
+     */
     function save() {
         let data = []
         let table = document.getElementById("table")
@@ -250,7 +258,7 @@
         }
 
         route = "{{tournament}}"
-
+        // Convert data to JSON, skipping the header row
         json_data = JSON.stringify(data.slice(1))
 
         const requestOptions = {
@@ -258,9 +266,16 @@
             headers: { 'Content-Type': 'application/json' },
             body: json_data
         }
-
+        //Send data to server
         fetch(route, requestOptions)
     }
+
+    /**
+     * Sends a POST request to the current URL to join a tournament
+     * and reloads the page upon receiving a response.
+     *
+     * @returns{void}
+     */
     function join_tournament() {
         console.log('clicking')
         const url = String(window.location)
@@ -268,7 +283,7 @@
         const requestOptions = {
             method: "POST",
         };
-
+        // Send a POST request to the current URL and reload the page upon success
         fetch(url, requestOptions).then(response => window.location.reload())
     }
 </script>

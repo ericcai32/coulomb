@@ -87,15 +87,18 @@
     </h1>
 
     <div class="container">
+        {# Makes a table for each tournament participant has competed in. #}
         {% for tournament in participated_events %}
         <div class="table-item"><a href="/tournaments/{{tournament}}">{{tournament}}</a></div>
         <table>
             <tr>
+                {# This makes headers of the events they participated in, in that tournament. #}
                 {% for key in dictionary[tournament] %}
                 <th>{{key[0]}}</th>
                 {% endfor %}
             </tr>
             <tr>
+                {# Actual data for their result for that specific tournament. #}
                 {% for key in dictionary[tournament] %}
                 <td>{{key[1]}}</td>
                 {% endfor %}

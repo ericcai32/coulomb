@@ -161,14 +161,17 @@
         </h1>
     </span>
     <div class="container">
+        {# This code makes a table for each tournament the team participated in. #}
         {% for tournament in participated_events %}
         <div class="table-item"><a href="/tournaments/{{tournament}}">{{tournament | replace('_', ' ') }}</a></div>
         <table>
+            {# Table Headers #}
             <tr>
                 {% for event in tournament_events[tournament] %}
                 <th>{{event | replace('_', ' ') }}</th>
                 {% endfor %}
             </tr>
+            {# Actual data #}
             <tr>
                 {% for placement in placements[tournament] %}
                 <td>{{placement}}</td>
@@ -188,7 +191,3 @@
 </body>
 
 </html>
-
-<script>
-    console.log({{ placements }});
-</script>
