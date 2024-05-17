@@ -15,6 +15,11 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    """
+    Allows the user to see a list of tournaments.
+    Returns:
+        The rendered tournament_list.j2 template.
+    """
     tournaments = get_all_tournaments()
     is_logged = check_session()
     return render_template('tournament_list.j2', tournaments=tournaments, is_logged=is_logged)
@@ -53,6 +58,9 @@ def tournament(tournament_name: str):
                 is_to = verify_creator(user, tournament_name)
                 joined = user in ([element for row in tournament_results for element in row])
             tournament_events = get_events(tournament_name)
+            results = read_table(tournament_name)
+            if len(results) > 0:
+                joined = joined or results[0][1] != None
             return render_template('tournament.j2', tournament=tournament_name, events=tournament_events, data=tournament_results, is_to=is_to, is_logged=is_logged, joined=joined)
         else:
             return send_file("static/404.html")
@@ -152,19 +160,23 @@ def logout():
     resp.set_cookie('token', '', expires=0)
     return resp
 
-@app.route('/add_participant/<team_name>', methods=['POST', 'GET'])
-def app_participant(team_name):
+@app.route('/add_participant/', methods=['POST', 'GET'])
+def app_participant():
     '''
     Allows the user to add participants to their school
     '''
-    print(team_name)
     if request.method == 'GET':
+        if not check_session():
+            return redirect('/login')
         return render_template('add_participant.j2')
+    events = request.form.getlist('event')
+    token = request.cookies.get('token')
+    user = get_session(token)
     tournament_name = request.form['tournament_name']
     event_name = request.form['event_name']
     participant_name =  request.form['participant_name']
     placement = request.form['placement']
-    add_participant(team_name, tournament_name, participant_name, placement, event_name)
+    add_participant(user, tournament_name, participant_name, placement, event_name)
     return render_template('add_participant.j2')
 
 @app.route('/participant_list/<team_name>')

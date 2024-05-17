@@ -320,6 +320,10 @@ def add_participant(team_name: str, tournament_name: str, participant_name: str,
     Return:
         boolean if adding the participant was successful or not
     '''
+    if tournament_name not in get_all_tournaments():
+        return False
+    if event_name not in get_events(tournament_name):
+        return False
     con = sqlite3.connect('School.db')
     cur = con.cursor()
     cur.execute('SELECT placement FROM teams WHERE team_name=? AND tournament_name=? AND participant_name=? AND event_name=?', (team_name, tournament_name, participant_name, event_name))
