@@ -91,13 +91,13 @@
         <div class="table-item"><a href="/tournaments/{{tournament}}">{{tournament}}</a></div>
         <table>
             <tr>
-                {% for key in dictionary %}
-                <th>{{key}}</th>
+                {% for key in dictionary[tournament] %}
+                <th>{{key[0]}}</th>
                 {% endfor %}
             </tr>
             <tr>
-                {% for key in dictionary %}
-                <td>{{thisdict[key]}}</td>
+                {% for key in dictionary[tournament] %}
+                <td>{{key[1]}}</td>
                 {% endfor %}
             </tr>
         </table>

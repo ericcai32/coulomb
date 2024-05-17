@@ -332,6 +332,23 @@ def add_participant(team_name: str, tournament_name: str, participant_name: str,
     con.close()
     return False
 
+def get_participant_tournaments(team_name: str, participant_name: str) -> list:
+    '''
+    Get list of tournaments participated in for a participant
+    Params:
+        team_name:name of team
+        participant_name: name of participant
+
+    Return:
+        List of tournaments
+    '''
+    con = sqlite3.connect('School.db')
+    cur = con.cursor()
+    cur.execute('SELECT tournament_name FROM teams WHERE team_name=? AND participant_name=?', (team_name, participant_name))
+    data = cur.fetchall()
+    con.close()
+    return data
+
 def get_participant_data(team_name: str, tournament_name: str, participant_name: str) -> list:
     '''
     Get data for a participant
