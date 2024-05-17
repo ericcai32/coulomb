@@ -43,7 +43,7 @@ def create_tournament(tournament_name: str, events: list, creator: str) -> str:
     cur.execute('INSERT INTO tournaments (name, creator) VALUES (?, ?)', (tournament_name, creator))
     con.commit()
     con.close()
-    return "Table Created"
+    return ""
 
 def read_table(tournament_name: str) -> list:
     '''

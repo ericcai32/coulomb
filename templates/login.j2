@@ -14,7 +14,7 @@
             <div class="passwordLine">
                 <input type="password" name="password" id="password" placeholder="Password">
             </div>
-                <label class="lock" onclick="toggleVisibility(event)">&#x1F441;</label>
+            <label class="lock" onclick="toggleVisibility(event)">&#x1F441;</label>
             <div class="login">
                 <button name="mode" value="LOGIN">Login</button>
                 <button name="mode" value="REGISTER">Register</button>
@@ -25,6 +25,12 @@
     </section>
 
     <script type="text/javascript">
+        /**
+         * Toggles the visibility of a password field on click.
+         * @param {Event} event - The event object triggered by the user action.
+         *                        Used to access the element that triggered the event.
+         * @returns {void}
+         */
         function toggleVisibility(event) {
             let x = document.getElementById("password");
             if (x.type === "password") {
