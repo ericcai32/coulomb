@@ -26,6 +26,12 @@ def index():
 
 @app.route('/new', methods=('GET', 'POST'))
 def new():
+    '''
+    Create new tournament
+    Returns:
+        Redirecs to tournament page if creatoin was successful.
+        Displays error if not
+    '''
     is_logged = check_session()
     if not is_logged:
         return redirect('/login')
@@ -45,6 +51,14 @@ def new():
     
 @app.route('/tournaments/<tournament_name>', methods=('GET', 'PUT'))
 def tournament(tournament_name: str):
+    '''
+    Get the tournament page
+    Params:
+        tournament_name: Name of tournament
+
+    Returns:
+        tournament.j2 if tournament exists, 404.html if not
+    '''
     if request.method == 'GET':
         tournament_exists = not check_exists(tournament_name)
         if tournament_exists:   
@@ -80,15 +94,25 @@ def tournament(tournament_name: str):
     
 @app.route('/tournaments/<tournament_name>', methods=['POST'])
 def add_tournament(tournament_name):
-    """
-
-    """
+    '''
+    Add data to a pre-existing tournament
+    Params:
+        tournament_name: name of tournament
+    '''
     token = request.cookies.get('token')
     add_to_table(tournament_name, get_session(token), {})
     return 'school added'
 
 @app.route('/teams/<team_name>/', methods=('GET', 'POST'))
 def team(team_name: str):
+    '''
+    The team page
+    Params: 
+        team_name: name of team
+
+    Returns: 
+        team.j2
+    '''
     data = get_participated_events(team_name)
     is_logged = check_session()
     tournament_events = {}
@@ -99,6 +123,15 @@ def team(team_name: str):
 
 @app.route('/teams/<team_name>/<participant_name>')
 def participant(team_name: str, participant_name: str):
+    '''
+    Gives the user the participant page
+    Params:
+        team_name: name of team
+        participant_name: name of participant
+
+    Returns:
+        partcicpant.j2
+    '''
     tournaments = [tournament_item[0] for tournament_item in get_participant_tournaments(team_name, participant_name)]
     placements = {}
     for tournament in tournaments:
@@ -188,5 +221,10 @@ def get_participant_list(team_name):
     print(team_name)
     data = get_all_participants(team_name)
     return render_template('participant_list.j2', participant=data,team_name=team_name)
+
+#Provides a 404 Error if sent a request that doesn't exist, or is invalid
+@app.errorhandler(404)
+def not_found(e):
+    return send_file("static/404.html")
 
 app.run(port=8022, debug=True)
