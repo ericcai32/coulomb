@@ -22,12 +22,12 @@
             profiles.forEach(profile => {
                 let link = document.createElement('a');
                 link.textContent = profile;
-                link.href = "/participants/" + profile;
+                link.href = '/teams/{{team_name}}/' + profile;
                 container.appendChild(link);
             });
         </script>
     </div>
-    <a class="new-button" href="/add_participants/{{team_name}}">Add Participant</a>
+    <a class="new-button" href="/add_participant/{{team_name}}">Add Participant</a>
 </body>
 
 </html>
