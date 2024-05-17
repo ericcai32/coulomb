@@ -212,7 +212,8 @@ def app_participant():
     event_name = request.form['event_name']
     participant_name =  request.form['participant_name']
     placement = request.form['placement']
-    add_participant(user, tournament_name, participant_name, placement, event_name)
+    if not add_participant(user, tournament_name, participant_name, placement, event_name):
+        return render_template('add_participant.j2', error="That result did not occur.")
     return render_template('add_participant.j2')
 
 @app.route('/participant_list/<team_name>')
