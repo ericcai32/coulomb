@@ -80,9 +80,6 @@ def tournament(tournament_name: str):
     
 @app.route('/tournaments/<tournament_name>', methods=['POST'])
 def add_tournament(tournament_name):
-    """
-
-    """
     token = request.cookies.get('token')
     add_to_table(tournament_name, get_session(token), {})
     return 'school added'
