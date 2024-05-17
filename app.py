@@ -152,4 +152,19 @@ def logout():
     resp.set_cookie('token', '', expires=0)
     return resp
 
+@app.route('/add_participant/<team_name>', methods=['POST', 'GET'])
+def app_participant(team_name):
+    '''
+    Allows the user to add participants to their school
+    '''
+    print(team_name)
+    if request.method == 'GET':
+        return render_template('add_participant.j2')
+    tournament_name = request.form['tournament_name']
+    event_name = request.form['event_name']
+    participant_name =  request.form['participant_name']
+    placement = request.form['placement']
+    add_participant(team_name, tournament_name, participant_name, placement, event_name)
+    return render_template('add_participant.j2')
+
 app.run(port=8022, debug=True)
