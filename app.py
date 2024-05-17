@@ -88,8 +88,12 @@ def team(team_name: str):
 
 @app.route('/teams/<team_name>/<participant_name>')
 def participant(team_name: str, participant_name: str):
-    print(get_participated_events(participant_name))
-    return render_template('participants.j2', School=team_name, user=participant_name)
+    tournaments = [tournament_item[0] for tournament_item in get_participant_tournaments(team_name, participant_name)]
+    placements = {}
+    for tournament in tournaments:
+        placements[tournament] = get_participant_data(team_name, tournament, participant_name)
+    print(placements)
+    return render_template('participants.j2', School=team_name, participated_events=tournaments, user=participant_name, dictionary=placements)
 
 @app.route('/login', methods=('GET', 'POST'))
 def login_flask():
