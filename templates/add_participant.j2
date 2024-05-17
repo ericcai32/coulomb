@@ -74,6 +74,10 @@
             background-color: rgb(252, 175, 49);
             opacity: 90%;
         }
+
+        .error {
+            color: red;
+        }
     </style>
 </head>
 
@@ -96,6 +100,7 @@
             <input type="text" id="placement" name="placement" required>
         </div>
         <input type="submit" value="Add Participant">
+        <p class="error">{{ error }}</p>
     </form>
 </body>
 
