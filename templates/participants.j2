@@ -83,21 +83,21 @@
 
 <body>
     <h1>
-        {{ user | replace('_', ' ') }}'s History:
+        {{School}} - {{ user }}'s History:
     </h1>
 
     <div class="container">
         {% for tournament in participated_events %}
-        <div class="table-item"><a href="/tournaments/{{tournament}}">{{tournament | replace('_', ' ') }}</a></div>
+        <div class="table-item"><a href="/tournaments/{{tournament}}">{{tournament}}</a></div>
         <table>
             <tr>
-                {% for event in tournament_events[tournament] %}
-                <th>{{event | replace('_', ' ') }}</th>
+                {% for key in dictionary %}
+                <th>{{key}}</th>
                 {% endfor %}
             </tr>
             <tr>
-                {% for placement in placements[tournament] %}
-                <td>{{placement}}</td>
+                {% for key in dictionary %}
+                <td>{{thisdict[key]}}</td>
                 {% endfor %}
             </tr>
         </table>
@@ -108,7 +108,3 @@
 </body>
 
 </html>
-
-<script>
-    console.log({{ placements }});
-</script>

@@ -96,6 +96,15 @@
             background: #ef9603;
             /* Button hover color */
         }
+
+        a {
+            text-decoration: underline;
+        }
+
+        tr {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
     </style>
 
     <title>{{ tournament }}</title>
@@ -122,20 +131,22 @@
             {% for row in data %}
             <tr class="row">
                 {% for cell in row %}
-                    {% if cell|string == 'None' %}
-                        <th id="cell"></th>
-                    {% else %}
-                        <th id="cell"> {{cell}} </th>
-                    {% endif %}
+                {% if loop.index0 == 0 %}
+                <th id="cell"><a href="/teams/{{ cell }}">{{ cell }}</a></th>
+                {% elif cell|string == 'None' %}
+                <th id="cell"></th>
+                {% else %}
+                <th id="cell">{{ cell }}</th>
+                {% endif %}
                 {% endfor %}
             </tr>
             {% endfor %}
         </table>
         {% if is_to %}
         <div>
-        <button class="save" onclick="save()">
-            Save
-        </button>
+            <button class="save" onclick="save()">
+                Save
+            </button>
         </div>
         {% endif %}
     </div>
@@ -144,6 +155,7 @@
 </html>
 
 <script>
+
     // Verification of whether tournament organizer is editing:
     const is_to = "{{ is_to }}";
     console.log(is_to);
@@ -253,6 +265,6 @@
         };
 
         fetch(url, requestOptions).then(response => console.log('created tournament'))
-        window.location.reload()
+
     }
 </script>
