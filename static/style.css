@@ -20,7 +20,7 @@ body {
 a.new-button {
     position: absolute;
     top: 1vw;
-    right: 1vw;
+    right: 8em;
     padding: 1em;
     background-color: var(--dark-1);
     color: black;
@@ -36,6 +36,23 @@ a.new-button:hover {
 
 a.prof {
     margin-left: 1vw;
+}
+
+a.login {
+    position: absolute;
+    top: 1vw;
+    right: 1vw;
+    padding: 1em;
+    background-color: var(--dark-1);
+    color: black;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+a.login:hover {
+    background-color: #ef9603;
 }
 
 button {
