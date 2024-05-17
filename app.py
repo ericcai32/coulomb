@@ -69,7 +69,7 @@ def tournament(tournament_name: str):
         events = get_events(tournament_name)
         for team_results in data:
             new_data = {}
-            team = team_results[0]
+            team = team_results[0].replace(' ', '_')
             for i in range(len(events)):
                 new_data[events[i]] = int(team_results[i + 1])
             if not update_row(tournament_name, team.strip(), new_data):

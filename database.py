@@ -202,6 +202,7 @@ def update_row(tourny_name: str, team: str, data: dict) -> bool:
         scores.append(data[event])
         print('going through')
     for i in range(len(scores)):
+        print(f'UPDATE {tourny_name} SET {event_names[i]} = {scores[i]} WHERE Team = ?', (team, ))
         cur.execute(f'UPDATE {tourny_name} SET {event_names[i]} = {scores[i]} WHERE Team = ?', (team, ))
         con.commit()
     con.close()
