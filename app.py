@@ -16,7 +16,8 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     tournaments = get_all_tournaments()
-    return render_template('tournament_list.j2', tournaments=tournaments)
+    is_logged = check_session()
+    return render_template('tournament_list.j2', tournaments=tournaments, is_logged=is_logged)
 
 @app.route('/new', methods=('GET', 'POST'))
 def new():
@@ -44,6 +45,7 @@ def tournament(tournament_name: str):
         if tournament_exists:   
             is_to = False
             is_logged = check_session()
+            joined = False
             tournament_results = read_table(tournament_name)
             if is_logged:
                 token = request.cookies.get('token')
@@ -77,13 +79,12 @@ def add_tournament(tournament_name):
 @app.route('/teams/<team_name>', methods=('GET', 'POST'))
 def team(team_name: str):
     data = get_participated_events(team_name)
-    # token = request.cookies.get('token')
-    # user = get_session(token)
+    is_logged = check_session()
     tournament_events = {}
     for tournament in data:
         tournament_events[tournament] = get_events(tournament)
     placements = get_placements(team_name)
-    return render_template('team.j2', participated_events=data, user=team_name, tournament_events=tournament_events, placements=placements)
+    return render_template('team.j2', participated_events=data, user=team_name, tournament_events=tournament_events, placements=placements, is_logged=is_logged)
 
 @app.route('/teams/<team_name>/<participant_name>')
 def participant(team_name: str, participant_name: str):
