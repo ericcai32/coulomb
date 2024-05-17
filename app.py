@@ -29,10 +29,11 @@ def new():
         events = request.form.getlist('event')
         token = request.cookies.get('token')
         user = get_session(token)
-        if create_tournament(tournament_name, events, user):
-            return redirect(f'tournaments/{tournament_name}')
+        error = create_tournament(tournament_name, events, user)
+        if error:
+            return render_template('new.j2', error=error)
         else:
-            return "Tournament with this name already exists." # Probably should make this prettier
+            return redirect(f'tournaments/{tournament_name}')
     if request.method == 'GET':
         return render_template('new.j2')
     
@@ -40,16 +41,17 @@ def new():
 def tournament(tournament_name: str):
     if request.method == 'GET':
         tournament_exists = not check_exists(tournament_name)
-        if tournament_exists:
+        if tournament_exists:   
             is_to = False
             is_logged = check_session()
+            tournament_results = read_table(tournament_name)
             if is_logged:
                 token = request.cookies.get('token')
                 user = get_session(token)
                 is_to = verify_creator(user, tournament_name)
-            tournament_results = read_table(tournament_name)
+                joined = user in ([element for row in tournament_results for element in row])
             tournament_events = get_events(tournament_name)
-            return render_template('tournament.j2', tournament=tournament_name, events=tournament_events, data=tournament_results, is_to=is_to, is_logged=is_logged)
+            return render_template('tournament.j2', tournament=tournament_name, events=tournament_events, data=tournament_results, is_to=is_to, is_logged=is_logged, joined=joined)
         else:
             return send_file("static/404.html")
     elif request.method == 'PUT':
