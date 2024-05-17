@@ -171,6 +171,6 @@ def app_participant(team_name):
 def get_participant_list(team_name):
     print(team_name)
     data = get_all_participants(team_name)
-    return render_template('participant_list.j2', participant=data)
+    return render_template('participant_list.j2', participant=data,team_name=team_name)
 
 app.run(port=8022, debug=True)
