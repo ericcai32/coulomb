@@ -75,6 +75,8 @@ def add_to_table(tournament_name: str, school_name: str, data: dict) -> bool:
     scores = []
     for event in data:
         event_names.append(event)
+        if not verify_positive_int(data[event]):
+            return False
         scores.append(data[event])
     con = sqlite3.connect('users.db')
     cur = con.cursor()
@@ -192,6 +194,8 @@ def update_row(tourny_name: str, team: str, data: dict) -> bool:
     scores = []
     for event in data:
         event_names.append(event)
+        if not verify_positive_int(data[event]):
+            return False
         scores.append(data[event])
     for i in range(len(scores)):
         cur.execute(f'UPDATE {tourny_name} SET {event_names[i]} = {scores[i]} WHERE Team = ?', (team, ))
@@ -361,3 +365,22 @@ def get_all_participants(team_name: str) -> list:
             rtn.append(participant[0])
     con.close()
     return rtn
+
+def verify_positive_int(number: str):
+    '''
+    Verifies that the string is a valid entry for placemtn
+    Params: 
+        numebr: string of number to verify
+    
+    Return:
+        boolean if the string is a postiive int or not
+    '''
+    try:
+        int(number)
+    except:
+        return False
+    
+    if int(number) <= 0:
+        return False
+    
+    return True
