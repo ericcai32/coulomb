@@ -33,6 +33,7 @@
         $(".add").click(function () {
             let first = document.querySelector('form > .event_form');
             let clone = first.cloneNode(true);
+
             first.parentNode.insertBefore(clone, first);
             return false;
         });
